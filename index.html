@@ -357,6 +357,13 @@ html[data-theme="light"] .xh-cell{background:rgba(247,242,232,.55)}
   body::before{background-size:128px 128px;background-position:calc(50% - 64px) -65px;
     background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='128' height='128'><path d='M64 59v10M59 64h10' stroke='white' stroke-width='1'/></svg>")}
 }
+/* STAR：每条前面一个小标签（背景 / 动作 / 结果） */
+.job ul.star li{padding-left:0}
+.job ul.star li::before{display:none}
+.star .sk,.cmp .sk{display:block;font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin-bottom:2px}
+.star li{max-width:62ch}
+.cmp{color:var(--fg-2);font-size:14.5px;line-height:1.6}
+@supports (grid-template-rows:subgrid){.comps .comp{grid-row:span 5}}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.rv{opacity:1;transform:none;filter:none}.name .w span{transform:none}.line-rv{clip-path:none}}
 </style>
 </head>
@@ -428,11 +435,11 @@ html[data-theme="light"] .xh-cell{background:rgba(247,242,232,.55)}
       <div class="when">Jun – Sep 2026<b>JD.com · 京东</b></div>
       <div>
         <h3><span lang="en">Supply Chain Incident Handling Intern</span><span lang="zh">供应链异常处理实习生</span></h3>
-        <ul>
-          <li><span lang="en">Cut average anomaly resolution time from <strong>4.3 to 3.1 days (−28%)</strong> through fast root-cause analysis and coordination across warehouse, customer service and QA teams.</span><span lang="zh">通过快速定位根因、协调仓库 / 客服 / 质检多部门，把异常平均处理时长从 <strong>4.3 天压到 3.1 天（−28%）</strong>。</span></li>
-          <li><span lang="en">Built a departmental anomaly dashboard that applies upstream transport standards to downstream loading quality, contributing to overall supply-chain cost reduction.</span><span lang="zh">搭建部门异常看板，把上游运输标准落到下游装车质量上，助力整体供应链降本。</span></li>
-          <li><span lang="en">Owned <strong>813 incident cases end-to-end at a 98.89% closure rate</strong>, running full SOPs for damage and error handling, claims and reissues.</span><span lang="zh">端到端负责 <strong>813 起异常工单，结案率 98.89%</strong>，完整执行破损、错发的处理 SOP，跟进理赔与补发。</span></li>
-          <li><span lang="en">Created a classification ledger for abnormal orders (transport damage, packaging loss, system errors) with weekly analysis reports — driving packaging-standard changes that <strong>cut repeat transport damage by 15%</strong>.</span><span lang="zh">建立异常订单分类台账（运输破损 / 包装缺失 / 系统错误）并每周出分析报告，推动包装标准改进，<strong>同类运输破损复发下降 15%</strong>。</span></li>
+        <ul class="star">
+          <li><span class="sk"><span lang="en">Context</span><span lang="zh">背景与痛点</span></span><span lang="en">High-frequency order exceptions — damage, packaging loss, mis-shipments, system errors — piled up across warehouse, customer service and QA, taking <strong>4.3 days</strong> on average to close.</span><span lang="zh">破损、包装缺失、错发、系统错误等异常单高频出现，卡在仓库、客服、质检之间来回流转，平均要 <strong>4.3 天</strong>才能结案。</span></li>
+          <li><span class="sk"><span lang="en">Action</span><span lang="zh">核心动作</span></span><span lang="en">Owned <strong>813 cases</strong> end-to-end under full SOPs for damage handling, claims and reissues; traced root causes and coordinated the three teams directly.</span><span lang="zh">端到端跟进 <strong>813 起异常工单</strong>，完整执行破损处理、理赔、补发 SOP；逐单查根因，直接协调三方推进。</span></li>
+          <li><span class="sk"><span lang="en">Action</span><span lang="zh">核心动作</span></span><span lang="en">Built a classification ledger with weekly analysis reports, and a departmental anomaly dashboard that carries upstream transport standards into downstream loading checks.</span><span lang="zh">建立异常订单分类台账并每周出分析报告；搭建部门异常看板，把上游运输标准落到下游装车核查上。</span></li>
+          <li><span class="sk"><span lang="en">Result</span><span lang="zh">优化结果</span></span><span lang="en">Resolution time <strong>4.3 → 3.1 days (−28%)</strong>, closure rate <strong>98.89%</strong>, and packaging-standard changes that <strong>cut repeat transport damage by 15%</strong>.</span><span lang="zh">平均处理时长 <strong>4.3 → 3.1 天（−28%）</strong>，结案率 <strong>98.89%</strong>；推动包装标准改进，<strong>同类运输破损复发下降 15%</strong>。</span></li>
         </ul>
         <div class="kpis"><span class="kpi"><b>−28%</b><span lang="en">resolution time</span><span lang="zh">处理时长</span></span><span class="kpi"><b>813</b><span lang="en">cases</span><span lang="zh">工单</span></span><span class="kpi"><b>98.89%</b><span lang="en">closure</span><span lang="zh">结案率</span></span><span class="kpi"><b>−15%</b><span lang="en">repeat damage</span><span lang="zh">破损复发</span></span></div>
       </div>
@@ -441,10 +448,11 @@ html[data-theme="light"] .xh-cell{background:rgba(247,242,232,.55)}
       <div class="when">Jan – Apr 2025<b><span lang="en">Xinjuxin Trading Co., Ltd.</span><span lang="zh">鑫聚鑫商贸有限公司</span></b></div>
       <div>
         <h3><span lang="en">Purchasing Intern</span><span lang="zh">采购实习生</span></h3>
-        <ul>
-          <li><span lang="en">Worked directly with multiple upstream suppliers; independently handled supplier selection, price benchmarking and order placement across <strong>60+ purchase orders at 97.86% on-time delivery</strong>.</span><span lang="zh">直接对接多家上游供应商，独立完成选品比价、供应商筛选与下单，累计 <strong>60+ 张采购单，准时交付率 97.86%</strong>。</span></li>
-          <li><span lang="en">Ran weekly physical counts, built variance-tracking sheets in Excel and planned replenishment from 3-month rolling sales — <strong>inventory turnover days 32 → 24</strong>.</span><span lang="zh">每周盘点实物，用 Excel 建差异追踪表，按近 3 个月滚动销量制定补货计划——<strong>库存周转天数 32 → 24</strong>。</span></li>
-          <li><span lang="en">Maintained purchase–sales–inventory ledgers and applied ABC classification to flag slow movers; with sales, ran targeted clearance — <strong>shrinkage 5.6% → 2.9%</strong>, slow-moving share <strong>−42%</strong>.</span><span lang="zh">维护进销存台账，用 ABC 分类找出滞销品，联合销售定向清仓——<strong>库存损耗 5.6% → 2.9%</strong>，滞销占比 <strong>−42%</strong>。</span></li>
+        <ul class="star">
+          <li><span class="sk"><span lang="en">Context</span><span lang="zh">背景与痛点</span></span><span lang="en">A small trading company buying from multiple suppliers with no systematic replenishment: stock sat for <strong>32 days</strong> on average and <strong>5.6%</strong> was lost to shrinkage.</span><span lang="zh">小型商贸公司对接多家供应商，补货凭经验：库存平均周转 <strong>32 天</strong>，损耗率 <strong>5.6%</strong>，滞销品压着资金。</span></li>
+          <li><span class="sk"><span lang="en">Action</span><span lang="zh">核心动作</span></span><span lang="en">Ran supplier selection, price benchmarking and ordering across <strong>60+ purchase orders</strong>; held weekly physical counts with Excel variance tracking.</span><span lang="zh">独立完成供应商筛选、比价与下单，累计 <strong>60+ 张采购单</strong>；每周实物盘点，用 Excel 追踪账实差异。</span></li>
+          <li><span class="sk"><span lang="en">Action</span><span lang="zh">核心动作</span></span><span lang="en">Planned replenishment from 3-month rolling sales, used ABC classification to flag slow movers, and ran targeted clearance with sales.</span><span lang="zh">按近 3 个月滚动销量制定补货计划，用 ABC 分类找出滞销品，联合销售定向清仓。</span></li>
+          <li><span class="sk"><span lang="en">Result</span><span lang="zh">优化结果</span></span><span lang="en">On-time delivery <strong>97.86%</strong>, turnover <strong>32 → 24 days</strong>, shrinkage <strong>5.6% → 2.9%</strong>, slow-moving share <strong>−42%</strong>.</span><span lang="zh">准时交付率 <strong>97.86%</strong>，周转天数 <strong>32 → 24</strong>，损耗 <strong>5.6% → 2.9%</strong>，滞销占比 <strong>−42%</strong>。</span></li>
         </ul>
         <div class="kpis"><span class="kpi"><b>60+</b>POs</span><span class="kpi"><b>97.86%</b><span lang="en">on-time</span><span lang="zh">准时交付</span></span><span class="kpi"><b>32→24</b><span lang="en">turnover days</span><span lang="zh">周转天数</span></span><span class="kpi"><b>5.6→2.9%</b><span lang="en">shrinkage</span><span lang="zh">损耗</span></span></div>
       </div>
@@ -484,19 +492,22 @@ html[data-theme="light"] .xh-cell{background:rgba(247,242,232,.55)}
     <article class="card comp span-4 rv" style="--i:0">
       <span class="tag"><span lang="en">Optimisation · 3rd Prize</span><span lang="zh">优化建模 · 三等奖</span></span>
       <h3><span lang="en">Logistics Network Design</span><span lang="zh">物流网络设计</span></h3>
-      <p><span lang="en">Joint location–routing model solved with a hybrid GA–PSO, cutting delivery nodes from 31 to 6 while keeping coverage.</span><span lang="zh">选址-路径联合建模，用遗传-粒子群混合算法求解，在保证覆盖的前提下把配送网点从 31 个压到 6 个。</span></p>
+      <p class="cmp"><span class="sk"><span lang="en">Context</span><span lang="zh">背景</span></span><span lang="en">31 scattered delivery nodes made routes long and costly to serve.</span><span lang="zh">31 个分散的配送网点让路线又长、成本又高。</span></p>
+      <p class="cmp"><span class="sk"><span lang="en">Approach</span><span lang="zh">方法</span></span><span lang="en">Joint location–routing model solved with a hybrid GA–PSO: 31 nodes converged to 6 while keeping coverage.</span><span lang="zh">选址-路径联合建模，遗传-粒子群混合算法求解：保证覆盖的前提下把网点从 31 个收敛到 6 个。</span></p>
       <div class="comp-figs"><span><b>31→6</b><span lang="en">nodes</span><span lang="zh">节点</span></span><span><b>31.02</b>TSP</span><span><b><span data-count="93.99" data-dec="2">0</span>%</b><span lang="en">gain</span><span lang="zh">提升</span></span></div>
     </article>
     <article class="card comp span-4 rv" style="--i:1">
       <span class="tag"><span lang="en">Research · 1st uni · 2nd provincial</span><span lang="zh">调研 · 校一等 · 省二等</span></span>
       <h3><span lang="en">Market Research</span><span lang="zh">市场调研大赛</span></h3>
-      <p><span lang="en">Full cycle — questionnaire design, data cleaning and SPSS modelling, written up as a strategy report.</span><span lang="zh">完整调研流程——问卷设计、数据清洗、SPSS 建模，写成策略报告。</span></p>
+      <p class="cmp"><span class="sk"><span lang="en">Context</span><span lang="zh">背景</span></span><span lang="en">Turn an open market question into evidence a decision can rest on.</span><span lang="zh">把一个开放的市场问题，变成能支撑决策的证据。</span></p>
+      <p class="cmp"><span class="sk"><span lang="en">Approach</span><span lang="zh">方法</span></span><span lang="en">Full cycle — questionnaire design, 100 responses, data cleaning and SPSS modelling — written up as a 19-page strategy report.</span><span lang="zh">完整调研流程——问卷设计、回收 100 份、数据清洗、SPSS 建模，写成 19 页策略报告。</span></p>
       <div class="comp-figs"><span><b><span data-count="100">0</span></b><span lang="en">responses</span><span lang="zh">份回收</span></span><span><b>19</b><span lang="en">pages</span><span lang="zh">页报告</span></span><span><b>SPSS</b></span></div>
     </article>
     <article class="card comp span-4 rv" style="--i:2">
       <span class="tag"><span lang="en">Control systems · 2nd Prize</span><span lang="zh">控制系统 · 二等奖</span></span>
       <h3><span lang="en">Transport Technology</span><span lang="zh">交通科技大赛</span></h3>
-      <p><span lang="en">Matlab / CarSim lane-keeping, pedestrian-avoidance and intersection control, verified with hardware-in-the-loop.</span><span lang="zh">Matlab / CarSim 车道保持、行人避撞、路口通行控制，硬件在环验证。</span></p>
+      <p class="cmp"><span class="sk"><span lang="en">Context</span><span lang="zh">背景</span></span><span lang="en">Vehicles must keep lane, avoid pedestrians and cross intersections safely — and stop fast when it matters.</span><span lang="zh">车辆要能保持车道、避让行人、安全通过路口，危险时要停得够快。</span></p>
+      <p class="cmp"><span class="sk"><span lang="en">Approach</span><span lang="zh">方法</span></span><span lang="en">Matlab / CarSim control algorithms verified with hardware-in-the-loop; emergency braking from 30 km/h in 0.586 s.</span><span lang="zh">Matlab / CarSim 控制算法，硬件在环验证；30km/h 紧急制动 0.586 秒。</span></p>
       <div class="comp-figs"><span><b>0.586s</b><span lang="en">braking @30km/h</span><span lang="zh">30km/h 紧急制动</span></span><span><b>HIL</b></span></div>
     </article>
   </div>
