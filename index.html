@@ -258,6 +258,52 @@ header.top{top:26px}
 .comp-figs{margin-top:auto;padding-top:12px;border-top:1px solid var(--card-b);display:flex;flex-wrap:wrap;gap:6px 16px;font-size:11px;color:var(--fg-3);letter-spacing:.04em}
 .comp-figs b{font-family:var(--mono);font-size:17px;font-weight:500;color:var(--accent);margin-right:5px;letter-spacing:-.02em}
 @media (max-width:860px){.comps .span-4{grid-column:span 2}}
+/* —— 瑞士网格 Part 2（2026-11-06）：8px 基准、标签降噪、克制的 hover —— */
+/* 1. 8px 模数：间距只用 8 的倍数，同一排的卡片拉齐上下沿 */
+section{padding:clamp(80px,12vh,136px) clamp(16px,5vw,64px)}
+h2.sec{margin:16px 0 40px}
+.hero .eyebrow{margin-bottom:24px}
+.role{margin-top:24px}.tagline{margin-top:16px}.meta-row{margin-top:24px;gap:8px 24px}.cta{margin-top:40px;gap:16px}
+.bento,.xh{gap:16px;align-items:stretch}
+@media (min-width:1100px){.bento,.xh{gap:24px}}
+.card{border-radius:16px;padding:32px}
+@media (max-width:860px){.card{padding:24px}}
+.xh-card{padding:32px}
+.xh-cell{border-radius:8px;padding:24px;display:flex;flex-direction:column}
+.xh-cell h4{margin:8px 0}
+.xh-cell .fig{margin-top:auto;padding-top:16px}
+.stat{display:flex;flex-direction:column}.stat .lbl{margin-top:16px}.stat .src{margin-top:auto;padding-top:16px}
+.timeline{gap:24px}
+.job{gap:32px}.job ul{margin-top:16px;gap:8px}.kpis{margin-top:16px;gap:8px}
+.comp{gap:8px}.comp-figs{padding-top:16px;gap:8px 16px}
+.skill-card h4{margin-bottom:16px}.bars{gap:16px}.list{gap:8px}
+.edu .when{margin-top:16px}
+.arch{gap:8px}.arch .row{gap:8px}.arch .node{border-radius:8px;padding:8px 16px}.arch .flow{height:16px}
+.mini-stats{gap:8px;margin-top:24px}.mini-stats div{border-radius:8px;padding:16px}
+
+/* 2. 标签降噪：技术栈改成无底色的等宽文字，用 / 隔开；只有核心数字标签留浅蓝底 */
+.chips{gap:0;margin-top:24px;font-family:var(--mono);font-size:12px;line-height:2;color:var(--fg-3)}
+.chip{border:0!important;border-radius:0;padding:0;background:none;color:var(--fg-2);font-size:12px}
+.chip:not(:last-child)::after{content:"/";color:var(--fg-3);opacity:.6;margin:0 8px}
+.kpi{border-radius:4px;padding:8px 12px;border:0;background:color-mix(in srgb,var(--accent) 12%,transparent);font-size:12px}
+.kpi b{font-family:var(--mono)}
+
+/* 3. 克制的 hover：卡片不动不发光，只有边框 / 左侧轴线换成冷蓝，右上角序号亮起 */
+.card{transform:none!important;transition:border-color .45s var(--ease)}
+.card::after{content:attr(data-ix);inset:auto;top:16px;right:24px;width:auto;height:auto;background:none!important;opacity:1;
+  font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--fg-3);transition:color .45s var(--ease)}
+.card::before{content:"";position:absolute;left:0;top:16px;bottom:16px;width:2px;background:transparent;transition:background .45s var(--ease)}
+.card:hover{border-color:var(--accent)}
+.card:hover::before{background:var(--accent)}
+.card:hover::after{color:var(--accent)}
+.xh-cell{transition:border-color .45s var(--ease)}
+.xh-cell:hover{border-color:var(--accent)}
+.xh-cell .ix{transition:color .45s var(--ease);color:var(--fg-3)}
+.xh-cell:hover .ix{color:var(--accent)}
+/* 右上角序号留出位置，别和第一行标签挤在一起 */
+.card .tag,.comp .tag,.card>.eyebrow:first-child,.skill-card h4{padding-right:40px}
+/* 三张竞赛卡：标签、标题、正文、数字四行用 subgrid 对齐，标签折行时标题也一起往下 */
+@supports (grid-template-rows:subgrid){.comps .comp{display:grid;grid-row:span 4;grid-template-rows:subgrid;gap:8px}.comps .comp-figs{margin-top:0;align-self:end}}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.rv{opacity:1;transform:none;filter:none}.name .w span{transform:none}.line-rv{clip-path:none}}
 </style>
 </head>
@@ -537,6 +583,7 @@ header.top{top:26px}
   var pb = document.getElementById('phoneBtn');
   if (pb) pb.addEventListener('click', function(){ var n = ['137', '7982', '0888'], a = document.createElement('a'); a.href = 'tel:+86' + n.join(''); a.textContent = '+86 ' + n.join(' '); a.className = 'phone-btn'; pb.replaceWith(a); });
   // 标尺上的北京时间
+  document.querySelectorAll('section').forEach(function(sec){ var n = 0; sec.querySelectorAll('.card').forEach(function(c){ n++; c.setAttribute('data-ix', String(n).padStart(2, '0')); }); });
   var clk = document.getElementById('clock');
   function tick(){ if (!clk) return; var d = new Date(Date.now() + 8 * 3600000); clk.textContent = 'UTC+8 ' + String(d.getUTCHours()).padStart(2, '0') + ':' + String(d.getUTCMinutes()).padStart(2, '0'); }
   tick(); setInterval(tick, 20000);
@@ -545,12 +592,6 @@ header.top{top:26px}
     var cur = document.getElementById('cursor');
     addEventListener('mousemove', function(e){ cur.style.left = e.clientX + 'px'; cur.style.top = e.clientY + 'px'; });
     document.querySelectorAll('a,button').forEach(function(el){ el.addEventListener('mouseenter', function(){ cur.classList.add('big'); }); el.addEventListener('mouseleave', function(){ cur.classList.remove('big'); }); });
-    document.querySelectorAll('.card:not(.xh-card)').forEach(function(c){
-      c.addEventListener('mousemove', function(e){ var r = c.getBoundingClientRect(), px = (e.clientX - r.left) / r.width, py = (e.clientY - r.top) / r.height;
-        c.style.setProperty('--mx', px * 100 + '%'); c.style.setProperty('--my', py * 100 + '%');
-        c.style.transform = 'perspective(900px) rotateX(' + ((.5 - py) * 4) + 'deg) rotateY(' + ((px - .5) * 5) + 'deg)'; });
-      c.addEventListener('mouseleave', function(){ c.style.transform = ''; });
-    });
   }
 })();
 </script>
