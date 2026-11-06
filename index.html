@@ -248,6 +248,16 @@ header.top{top:26px}
 .xh-cell .fig small{font-size:11px;color:var(--fg-3);margin-left:6px;letter-spacing:.06em}
 .c7{grid-column:span 7}.c5{grid-column:span 5}
 @media (max-width:860px){.xh{grid-template-columns:1fr}.c7,.c5{grid-column:auto}}
+
+/* 作品：霄的家单独一张大卡，竞赛三张小卡（大小不同，不放在同一排翻页里） */
+.xh-card{padding:clamp(22px,3vw,36px)}
+.comp{display:flex;flex-direction:column;gap:10px}
+.comp .tag{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}
+.comp h3{font-size:19px;font-weight:700;letter-spacing:-.01em;line-height:1.25}
+.comp p{color:var(--fg-2);font-size:14.5px;line-height:1.6}
+.comp-figs{margin-top:auto;padding-top:12px;border-top:1px solid var(--card-b);display:flex;flex-wrap:wrap;gap:6px 16px;font-size:11px;color:var(--fg-3);letter-spacing:.04em}
+.comp-figs b{font-family:var(--mono);font-size:17px;font-weight:500;color:var(--accent);margin-right:5px;letter-spacing:-.02em}
+@media (max-width:860px){.comps .span-4{grid-column:span 2}}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.rv{opacity:1;transform:none;filter:none}.name .w span{transform:none}.line-rv{clip-path:none}}
 </style>
 </head>
@@ -347,10 +357,8 @@ header.top{top:26px}
 <section id="projects">
   <div class="eyebrow rv"><span lang="en">03 — Featured Projects</span><span lang="zh">03 — 代表作品</span></div>
   <h2 class="sec serif rv"><span lang="en">Things I <em>built</em>.</span><span lang="zh">我<em>做出来</em>的东西。</span></h2>
-  <div class="deck-wrap rv">
-    <div class="deck" id="deck">
       <!-- 1 霄的家 -->
-      <article class="slide card">
+      <article class="card rv xh-card">
         <div class="xh">
           <div class="xh-head">
             <span class="tag" style="display:inline-block;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);margin-bottom:10px"><span lang="en">AIGC · Full-stack · Solo · 2026 – now</span><span lang="zh">AIGC · 全栈 · 独立开发 · 2026 至今</span></span>
@@ -371,52 +379,27 @@ header.top{top:26px}
           <div class="xh-cell c5" style="background:transparent"><div class="chips" style="margin-top:0"><span class="chip">React</span><span class="chip">Vite</span><span class="chip">Node.js</span><span class="chip">Express</span><span class="chip">Android · Java</span><span class="chip">LLM APIs</span><span class="chip">MCP</span><span class="chip">RAG / Embeddings</span><span class="chip">Web Audio</span><span class="chip">Canvas</span><span class="chip">Prompt Engineering</span></div></div>
         </div>
       </article>
-      <!-- 2 物流网络设计 -->
-      <article class="slide card">
-        <div class="proj">
-          <div>
-            <span class="tag"><span lang="en">Optimisation · 3rd Prize</span><span lang="zh">优化建模 · 三等奖</span></span>
-            <h3 class="serif"><span lang="en">Logistics Network Design</span><span lang="zh">物流网络设计</span><small><span lang="en">Hybrid genetic algorithm × particle swarm optimisation for nodes and routes</span><span lang="zh">遗传算法 × 粒子群混合优化，选址与路径一起算</span></small></h3>
-            <p class="lead"><span lang="en">Modelled the network as a joint location–routing problem and solved it with a hybrid GA–PSO, shrinking the node set from 31 to 6 while keeping service coverage.</span><span lang="zh">把网络建成选址-路径联合问题，用 GA–PSO 混合算法求解，在保证覆盖的前提下把节点从 31 个压到 6 个。</span></p>
-          </div>
-          <div class="mini-stats" style="align-self:center">
-            <div><b class="serif">31→6</b><span lang="en">nodes</span><span lang="zh">节点</span></div>
-            <div><b class="serif">31.02</b>TSP</div>
-            <div><b class="serif"><span data-count="93.99" data-dec="2">0</span>%</b><span lang="en">gain</span><span lang="zh">提升</span></div>
-          </div>
-        </div>
-      </article>
-      <!-- 3 市场调研 -->
-      <article class="slide card">
-        <div class="proj">
-          <div>
-            <span class="tag"><span lang="en">Research · 1st in university · 2nd provincial</span><span lang="zh">调研 · 校一等 · 省二等</span></span>
-            <h3 class="serif"><span lang="en">Market Research</span><span lang="zh">市场调研大赛</span><small><span lang="en">Full research cycle — from questionnaire to strategy</span><span lang="zh">完整调研流程——从问卷到策略</span></small></h3>
-            <p class="lead"><span lang="en">Designed the questionnaire, cleaned the data and analysed it in SPSS, then turned the findings into a 19-page report with strategy recommendations.</span><span lang="zh">设计问卷、清洗数据、用 SPSS 分析，最后写成 19 页报告并给出策略建议。</span></p>
-          </div>
-          <div class="mini-stats" style="align-self:center">
-            <div><b class="serif"><span data-count="100">0</span></b><span lang="en">responses</span><span lang="zh">份回收</span></div>
-            <div><b class="serif">19</b><span lang="en">page report</span><span lang="zh">页报告</span></div>
-            <div><b class="serif">SPSS</b><span lang="en">analysis</span><span lang="zh">分析</span></div>
-          </div>
-        </div>
-      </article>
-      <!-- 4 交通科技 -->
-      <article class="slide card">
-        <div class="proj">
-          <div>
-            <span class="tag"><span lang="en">Control systems · 2nd Prize</span><span lang="zh">控制系统 · 二等奖</span></span>
-            <h3 class="serif"><span lang="en">Transport Technology</span><span lang="zh">交通科技大赛</span><small><span lang="en">Matlab / CarSim control algorithms with HIL verification</span><span lang="zh">Matlab / CarSim 控制算法 + 硬件在环验证</span></small></h3>
-            <p class="lead"><span lang="en">Developed lane-keeping, collision-avoidance and intersection control algorithms and verified them with hardware-in-the-loop testing.</span><span lang="zh">开发车道保持、避撞、路口通行控制算法，并做硬件在环（HIL）验证。</span></p>
-          </div>
-          <div class="chips" style="align-self:center"><span class="chip">Matlab</span><span class="chip">CarSim</span><span class="chip">HIL</span><span class="chip" lang="en">Lane keeping</span><span class="chip" lang="zh">车道保持</span><span class="chip" lang="en">Collision avoidance</span><span class="chip" lang="zh">避撞</span></div>
-        </div>
-      </article>
-    </div>
-    <div class="deck-nav">
-      <div class="dots" id="dots"></div>
-      <div class="arrows"><button id="prev" aria-label="Previous"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button><button id="next" aria-label="Next"><svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></button></div>
-    </div>
+
+  <div class="eyebrow rv" style="margin:56px 0 18px"><span lang="en">Academic competitions</span><span lang="zh">学术竞赛</span></div>
+  <div class="bento comps">
+    <article class="card comp span-4 rv" style="--i:0">
+      <span class="tag"><span lang="en">Optimisation · 3rd Prize</span><span lang="zh">优化建模 · 三等奖</span></span>
+      <h3><span lang="en">Logistics Network Design</span><span lang="zh">物流网络设计</span></h3>
+      <p><span lang="en">Joint location–routing model solved with a hybrid GA–PSO, cutting delivery nodes from 31 to 6 while keeping coverage.</span><span lang="zh">选址-路径联合建模，用遗传-粒子群混合算法求解，在保证覆盖的前提下把配送网点从 31 个压到 6 个。</span></p>
+      <div class="comp-figs"><span><b>31→6</b><span lang="en">nodes</span><span lang="zh">节点</span></span><span><b>31.02</b>TSP</span><span><b><span data-count="93.99" data-dec="2">0</span>%</b><span lang="en">gain</span><span lang="zh">提升</span></span></div>
+    </article>
+    <article class="card comp span-4 rv" style="--i:1">
+      <span class="tag"><span lang="en">Research · 1st uni · 2nd provincial</span><span lang="zh">调研 · 校一等 · 省二等</span></span>
+      <h3><span lang="en">Market Research</span><span lang="zh">市场调研大赛</span></h3>
+      <p><span lang="en">Full cycle — questionnaire design, data cleaning and SPSS modelling, written up as a strategy report.</span><span lang="zh">完整调研流程——问卷设计、数据清洗、SPSS 建模，写成策略报告。</span></p>
+      <div class="comp-figs"><span><b><span data-count="100">0</span></b><span lang="en">responses</span><span lang="zh">份回收</span></span><span><b>19</b><span lang="en">pages</span><span lang="zh">页报告</span></span><span><b>SPSS</b></span></div>
+    </article>
+    <article class="card comp span-4 rv" style="--i:2">
+      <span class="tag"><span lang="en">Control systems · 2nd Prize</span><span lang="zh">控制系统 · 二等奖</span></span>
+      <h3><span lang="en">Transport Technology</span><span lang="zh">交通科技大赛</span></h3>
+      <p><span lang="en">Matlab / CarSim lane-keeping, pedestrian-avoidance and intersection control, verified with hardware-in-the-loop.</span><span lang="zh">Matlab / CarSim 车道保持、行人避撞、路口通行控制，硬件在环验证。</span></p>
+      <div class="comp-figs"><span><b>0.586s</b><span lang="en">braking @30km/h</span><span lang="zh">30km/h 紧急制动</span></span><span><b>HIL</b></span></div>
+    </article>
   </div>
 </section>
 
@@ -557,27 +540,12 @@ header.top{top:26px}
   var clk = document.getElementById('clock');
   function tick(){ if (!clk) return; var d = new Date(Date.now() + 8 * 3600000); clk.textContent = 'UTC+8 ' + String(d.getUTCHours()).padStart(2, '0') + ':' + String(d.getUTCMinutes()).padStart(2, '0'); }
   tick(); setInterval(tick, 20000);
-  // 作品：横向翻页（滑动 / 箭头 / 圆点）
-  var deck = document.getElementById('deck'), slides = deck.querySelectorAll('.slide'), dots = document.getElementById('dots');
-  slides.forEach(function(s, i){ var b = document.createElement('button'); b.setAttribute('aria-label', 'Slide ' + (i + 1)); b.onclick = function(){ goSlide(i); }; dots.appendChild(b); });
-  function curSlide(){ var c = deck.scrollLeft + deck.clientWidth / 2, best = 0, bd = 1e9; slides.forEach(function(s, i){ var m = s.offsetLeft + s.offsetWidth / 2, d = Math.abs(m - c); if (d < bd){ bd = d; best = i; } }); return best; }
-  function goSlide(i){ i = Math.max(0, Math.min(slides.length - 1, i)); var s = slides[i]; deck.scrollTo({ left: s.offsetLeft - (deck.clientWidth - s.offsetWidth) / 2, behavior: reduce ? 'auto' : 'smooth' }); }
-  function mark(){ var c = curSlide(); dots.querySelectorAll('button').forEach(function(b, i){ b.classList.toggle('on', i === c); }); slides.forEach(function(s, i){ s.classList.toggle('dim', i !== c); }); }
-  deck.addEventListener('scroll', function(){ requestAnimationFrame(mark); }, { passive: true }); mark();
-  document.getElementById('prev').onclick = function(){ goSlide(curSlide() - 1); };
-  document.getElementById('next').onclick = function(){ goSlide(curSlide() + 1); };
-  // 电脑上竖着滚轮划过作品区时不劫持；拖拽翻页
-  var drag = null;
-  deck.addEventListener('pointerdown', function(e){ if (e.pointerType !== 'mouse') return; drag = { x: e.clientX, l: deck.scrollLeft }; deck.style.scrollSnapType = 'none'; });
-  addEventListener('pointermove', function(e){ if (drag) deck.scrollLeft = drag.l - (e.clientX - drag.x); });
-  addEventListener('pointerup', function(){ if (!drag) return; drag = null; deck.style.scrollSnapType = ''; goSlide(curSlide()); });
-
   // 电脑上：卡片跟着鼠标的光、轻微倾斜、小光标
   if (matchMedia('(hover:hover) and (pointer:fine)').matches && !reduce){
     var cur = document.getElementById('cursor');
     addEventListener('mousemove', function(e){ cur.style.left = e.clientX + 'px'; cur.style.top = e.clientY + 'px'; });
     document.querySelectorAll('a,button').forEach(function(el){ el.addEventListener('mouseenter', function(){ cur.classList.add('big'); }); el.addEventListener('mouseleave', function(){ cur.classList.remove('big'); }); });
-    document.querySelectorAll('.card:not(.slide)').forEach(function(c){
+    document.querySelectorAll('.card:not(.xh-card)').forEach(function(c){
       c.addEventListener('mousemove', function(e){ var r = c.getBoundingClientRect(), px = (e.clientX - r.left) / r.width, py = (e.clientY - r.top) / r.height;
         c.style.setProperty('--mx', px * 100 + '%'); c.style.setProperty('--my', py * 100 + '%');
         c.style.transform = 'perspective(900px) rotateX(' + ((.5 - py) * 4) + 'deg) rotateY(' + ((px - .5) * 5) + 'deg)'; });
