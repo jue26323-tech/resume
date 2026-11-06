@@ -12,15 +12,17 @@
   --paper:#f7f2e8; --paper-2:#ede5d4; --paper-3:#e2d7c1;
   --brass:#c9a86a; --sky:#8fb3e6;
   --ease:cubic-bezier(.2,.7,.1,1);
+  --mono:"JetBrains Mono","SF Mono",ui-monospace,Menlo,Consolas,"Roboto Mono",monospace;
+  --sans:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",Roboto,sans-serif;
 }
 html[data-theme="dark"]{
-  --bg:var(--navy); --bg-2:var(--navy-2); --card:rgba(247,242,232,.045); --card-b:rgba(247,242,232,.10);
-  --fg:var(--paper); --fg-2:rgba(247,242,232,.72); --fg-3:rgba(247,242,232,.48); --accent:var(--brass); --accent-2:var(--sky);
-  --chip:rgba(201,168,106,.12);
+  --bg:var(--navy); --bg-2:var(--navy-2); --card:rgba(247,242,232,.045); --card-b:rgba(148,163,184,.15);
+  --fg:var(--paper); --fg-2:rgba(203,213,225,.82); --fg-3:rgba(148,163,184,.75); --accent:#8fb3e6; --accent-2:#c7d7f2;
+  --chip:rgba(143,179,230,.10);
 }
 html[data-theme="light"]{
-  --bg:var(--paper); --bg-2:var(--paper-2); --card:rgba(13,24,48,.035); --card-b:rgba(13,24,48,.11);
-  --fg:var(--navy); --fg-2:rgba(13,24,48,.74); --fg-3:rgba(13,24,48,.5); --accent:#9a7533; --accent-2:#2f5ea8;
+  --bg:var(--paper); --bg-2:var(--paper-2); --card:rgba(13,24,48,.035); --card-b:rgba(71,85,105,.18);
+  --fg:var(--navy); --fg-2:#475569; --fg-3:#64748b; --accent:#1f3fae; --accent-2:#4a6fd0;
   --chip:rgba(13,24,48,.06);
 }
 *{box-sizing:border-box;margin:0;padding:0}
@@ -38,7 +40,7 @@ html[data-theme="light"] .aurora{opacity:.35}
 .aurora i{position:absolute;border-radius:50%;width:55vmax;height:55vmax;mix-blend-mode:screen}
 html[data-theme="light"] .aurora i{mix-blend-mode:multiply}
 .aurora i:nth-child(1){left:-5%;top:-10%;background:radial-gradient(closest-side,rgba(60,100,180,.55),transparent);animation:drift1 28s ease-in-out infinite}
-.aurora i:nth-child(2){right:-10%;top:20%;background:radial-gradient(closest-side,rgba(201,168,106,.35),transparent);animation:drift2 34s ease-in-out infinite}
+.aurora i:nth-child(2){right:-10%;top:20%;background:radial-gradient(closest-side,rgba(31,63,174,.35),transparent);animation:drift2 34s ease-in-out infinite}
 .aurora i:nth-child(3){left:20%;bottom:-25%;background:radial-gradient(closest-side,rgba(143,179,230,.35),transparent);animation:drift3 40s ease-in-out infinite}
 @keyframes drift1{50%{transform:translate(18vmax,12vmax) scale(1.15)}}
 @keyframes drift2{50%{transform:translate(-16vmax,10vmax) scale(.9)}}
@@ -213,6 +215,39 @@ main.turn{animation:turn .75s var(--ease)}
 @media (hover:hover) and (pointer:fine){.cursor{opacity:1}}
 .cursor.big{width:46px;height:46px;opacity:.35}
 
+
+/* —— 瑞士网格精装修（2026-11-06，霄读《平面设计中的网格系统》后提的） —— */
+body{font-family:var(--sans);font-size:16px;line-height:1.65}
+.name,h2.sec,.proj h3,.edu h3,.contact .big,.logo{font-family:var(--sans)!important;font-weight:700;letter-spacing:-.03em}
+.name em,h2.sec em,.contact .big em{font-style:normal}
+.name{font-weight:700}
+.eyebrow,.stat .num,.stat .src,.mini-stats b,.kpi b,.job .when,.feat .ix,.proj .tag,.skill-card h4,.edu .when,.ruler,.bar .t span,.chip{font-family:var(--mono)!important;letter-spacing:.02em}
+.eyebrow{letter-spacing:.18em}
+.stat .num{font-weight:500;letter-spacing:-.04em}
+.stat .num small,.mini-stats b{color:var(--accent)}
+p.lead,.tagline,.job li,.feat span,.list li,.stat .lbl,.xh-cell p{max-width:62ch;line-height:1.65}
+.job li,.feat span,.list li,.xh-cell p{font-size:15px}
+.bento{gap:16px}
+.card{border-color:var(--card-b)}
+/* 顶上那条标尺 */
+.ruler{position:fixed;left:0;right:0;top:0;z-index:55;height:26px;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:0 clamp(16px,4vw,40px);
+  font-size:10.5px;text-transform:uppercase;color:var(--fg-3);border-bottom:1px solid var(--card-b);background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+.ruler b{color:var(--accent);font-weight:500}
+.ruler .r{display:flex;gap:14px}
+@media (max-width:640px){.ruler .hide-s{display:none}}
+header.top{top:26px}
+.progress{top:26px}
+/* 霄的家：12 列便当网格 */
+.xh{display:grid;grid-template-columns:repeat(12,1fr);gap:16px}
+.xh-head{grid-column:1 / -1}
+.xh-cell{border:1px solid var(--card-b);border-radius:16px;padding:20px 22px;background:color-mix(in srgb,var(--bg) 55%,transparent)}
+.xh-cell .ix{font-family:var(--mono);font-size:11px;color:var(--accent);letter-spacing:.14em}
+.xh-cell h4{font-size:17px;font-weight:700;letter-spacing:-.01em;margin:8px 0 6px}
+.xh-cell p{color:var(--fg-2)}
+.xh-cell .fig{font-family:var(--mono);font-size:22px;color:var(--accent);margin-top:12px;letter-spacing:-.02em}
+.xh-cell .fig small{font-size:11px;color:var(--fg-3);margin-left:6px;letter-spacing:.06em}
+.c7{grid-column:span 7}.c5{grid-column:span 5}
+@media (max-width:860px){.xh{grid-template-columns:1fr}.c7,.c5{grid-column:auto}}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.rv{opacity:1;transform:none;filter:none}.name .w span{transform:none}.line-rv{clip-path:none}}
 </style>
 </head>
@@ -222,6 +257,7 @@ main.turn{animation:turn .75s var(--ease)}
 <div class="progress" id="progress"></div>
 <div class="cursor" id="cursor"></div>
 
+<div class="ruler"><span><b>CELOS CAO</b> // PORTFOLIO 2026</span><span class="r"><span class="hide-s">LOCATION: CHINA (UTC+8)</span><span id="clock">--:--</span><span class="hide-s">· OPEN FOR REMOTE</span></span></div>
 <header class="top" id="top">
   <a href="#hero" class="logo serif">Celos<b>.</b></a>
   <nav class="links">
@@ -315,33 +351,24 @@ main.turn{animation:turn .75s var(--ease)}
     <div class="deck" id="deck">
       <!-- 1 霄的家 -->
       <article class="slide card">
-        <div class="proj">
-          <div>
-            <span class="tag"><span lang="en">AIGC · Full-stack · Solo · 2026 – now</span><span lang="zh">AIGC · 全栈 · 独立开发 · 2026 至今</span></span>
-            <h3 class="serif">Xiao-Home<small><span lang="en">An AI companion app with long-term memory, voice and agent tools</span><span lang="zh">一款有长期记忆、会说话、能自己用工具的 AI 陪伴应用</span></small></h3>
-            <p class="lead"><span lang="en">I took it from idea to a product used every day: web app, backend and a native Android app, shipped in small daily iterations driven by real user feedback.</span><span lang="zh">从一个想法做到每天都在用的产品：网页端、后端和安卓原生 App，按真实使用反馈小步快跑、天天迭代。</span></p>
-            <ul class="feat">
-              <li><span class="ix">01</span><div><b><span lang="en">LLM engineering & cost control</span><span lang="zh">大模型工程与成本控制</span></b><span><span lang="en">Multi-provider model access (Claude / Gemini), streaming replies, prompt caching, and cheap-model routing for background jobs. Structured action tags in replies are parsed into real side effects.</span><span lang="zh">接入多家模型（Claude / Gemini），流式输出、提示词缓存，后台任务走低价模型；回复里的结构化动作标签会被解析成真实的操作。</span></span></div></li>
-              <li><span class="ix">02</span><div><b><span lang="en">Long-term memory system</span><span lang="zh">长期记忆系统</span></b><span><span lang="en">Layered memory with vector search (embeddings), emotional valence/arousal weighting and nightly consolidation. After a real data-loss incident I added fail-safe reads and one-tap version restore.</span><span lang="zh">分层记忆 + 向量检索、情绪效价/唤醒加权、夜间整理巩固；经历过一次真实的数据丢失后，补上了「读失败不覆盖」和一键回滚历史版本。</span></span></div></li>
-              <li><span class="ix">03</span><div><b><span lang="en">Agents & MCP integrations</span><span lang="zh">智能体与 MCP 集成</span></b><span><span lang="en">Model Context Protocol clients let the AI act in external services step by step, with per-step logs, a live progress view and resume-after-restart.</span><span lang="zh">用 MCP（模型上下文协议）让 AI 一步步操作外部服务，每一步都有日志、能实时查看进度，后台重启后能接着做。</span></span></div></li>
-              <li><span class="ix">04</span><div><b><span lang="en">Multimodal experience</span><span lang="zh">多模态体验</span></b><span><span lang="en">Voice in/out with emotional TTS, on-device audio analysis, 3D binaural audio, image and long-screenshot understanding, and procedural illustrations rendered in a sandboxed worker.</span><span lang="zh">语音输入输出（情绪化 TTS）、手机端声学分析、双耳 3D 空间音频、图片与长截图理解、在沙盒里运行的程序化插画。</span></span></div></li>
-            </ul>
+        <div class="xh">
+          <div class="xh-head">
+            <span class="tag" style="display:inline-block;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);margin-bottom:10px"><span lang="en">AIGC · Full-stack · Solo · 2026 – now</span><span lang="zh">AIGC · 全栈 · 独立开发 · 2026 至今</span></span>
+            <h3 style="font-size:clamp(26px,3.6vw,40px);line-height:1.1;font-weight:700;letter-spacing:-.03em">Xiao-Home</h3>
+            <p class="lead" style="margin-top:10px;color:var(--fg-2)"><span lang="en">An AI companion app with long-term memory, voice and agent tools. I took it from idea to a product used every day — web app, backend and native Android app — shipped in small daily iterations driven by real user feedback.</span><span lang="zh">一款有长期记忆、会说话、能自己用工具的 AI 陪伴应用。从一个想法做到每天都在用的产品：网页端、后端和安卓原生 App，按真实使用反馈小步快跑、天天迭代。</span></p>
           </div>
-          <div>
-            <div class="arch">
-              <div class="row"><div class="node"><b>Client</b><span lang="en">React web app + Android (WebView + native notifications, calls, overlays)</span><span lang="zh">React 网页 + 安卓（WebView + 原生通知、来电、悬浮窗）</span></div></div>
+          <div class="xh-cell c7"><span class="ix">01 — ARCHITECTURE</span><h4><span lang="en">Full-stack, three platforms</span><span lang="zh">全栈，三端</span></h4><p><span lang="en">React web app, Node.js / Express backend with streaming and scheduled jobs, and a native Android shell for notifications, calls and overlays. Multi-provider LLM access (Claude / Gemini) with prompt caching and low-cost routing for background work.</span><span lang="zh">React 网页、带流式输出和定时任务的 Node.js / Express 后端、安卓原生外壳（通知、来电、悬浮窗）。接入多家大模型（Claude / Gemini），提示词缓存、后台任务走低价模型。</span></p><div class="fig"><span data-count="26">0</span>k+<small lang="en">LINES · 260+ COMMITS</small><small lang="zh">行代码 · 260+ 次提交</small></div></div>
+          <div class="xh-cell c5"><span class="ix">03 — AGENTS</span><h4><span lang="en">MCP tool use</span><span lang="zh">MCP 工具调用</span></h4><p><span lang="en">Model Context Protocol clients let the AI act in external services step by step — per-step logs, a live progress view, and resume after a server restart.</span><span lang="zh">用 MCP（模型上下文协议）让 AI 一步步操作外部服务——逐步日志、实时进度，后台重启后能接着做。</span></p></div>
+          <div class="xh-cell c7"><span class="ix">02 — MEMORY</span><h4><span lang="en">Long-term memory with disaster recovery</span><span lang="zh">带容灾的长期记忆</span></h4><p><span lang="en">Layered memory with vector search, emotional valence/arousal weighting and nightly consolidation. After a real data-loss incident I added fail-safe reads (a failed read can never overwrite data) and one-tap restore from version history.</span><span lang="zh">分层记忆 + 向量检索、情绪效价 / 唤醒加权、夜间整理巩固。经历过一次真实的数据丢失后，补上了「读失败绝不覆盖」和从版本历史一键找回。</span></p><div class="fig"><span data-count="1300">0</span>+<small lang="en">MEMORIES KEPT</small><small lang="zh">条记忆</small></div></div>
+          <div class="xh-cell c5"><span class="ix">04 — SENSES</span><h4><span lang="en">Voice, audio & vision</span><span lang="zh">声音、听觉与视觉</span></h4><p><span lang="en">Emotional TTS, on-device audio analysis, 3D binaural audio, image and long-screenshot understanding, and procedural illustrations rendered in a sandboxed worker.</span><span lang="zh">情绪化语音合成、手机端声学分析、双耳 3D 空间音频、图片与长截图理解、在沙盒里运行的程序化插画。</span></p></div>
+          <div class="xh-cell c7" style="background:transparent"><div class="arch">
+              <div class="row"><div class="node"><b>Client</b><span lang="en">React web + Android (WebView + native)</span><span lang="zh">React 网页 + 安卓（WebView + 原生）</span></div></div>
               <div class="flow"></div>
-              <div class="row"><div class="node"><b>API</b><span lang="en">Node.js / Express · streaming · scheduling</span><span lang="zh">Node.js / Express · 流式 · 定时任务</span></div><div class="node"><b>Models</b><span lang="en">LLM router · embeddings · vision · TTS</span><span lang="zh">模型路由 · 向量 · 视觉 · 语音</span></div></div>
+              <div class="row"><div class="node"><b>API</b><span lang="en">Node.js / Express · streaming · jobs</span><span lang="zh">Node.js / Express · 流式 · 定时任务</span></div><div class="node"><b>Models</b><span lang="en">LLM router · embeddings · vision · TTS</span><span lang="zh">模型路由 · 向量 · 视觉 · 语音</span></div></div>
               <div class="flow"></div>
-              <div class="row"><div class="node"><b>Memory</b><span lang="en">Versioned store with snapshots & restore</span><span lang="zh">带版本快照与回滚的存储</span></div><div class="node"><b>Tools</b><span lang="en">MCP clients · web · media</span><span lang="zh">MCP 客户端 · 网页 · 媒体</span></div></div>
-            </div>
-            <div class="mini-stats">
-              <div><b class="serif"><span data-count="26">0</span>k+</b><span lang="en">lines of code</span><span lang="zh">行代码</span></div>
-              <div><b class="serif"><span data-count="260">0</span>+</b><span lang="en">commits</span><span lang="zh">次提交</span></div>
-              <div><b class="serif">3</b><span lang="en">platforms</span><span lang="zh">端</span></div>
-            </div>
-            <div class="chips"><span class="chip">React</span><span class="chip">Vite</span><span class="chip">Node.js</span><span class="chip">Express</span><span class="chip">Android · Java</span><span class="chip">LLM APIs</span><span class="chip">MCP</span><span class="chip">RAG / Embeddings</span><span class="chip">Web Audio</span><span class="chip">Canvas</span><span class="chip">Prompt Engineering</span></div>
-          </div>
+              <div class="row"><div class="node"><b>Memory</b><span lang="en">Versioned store · snapshots · restore</span><span lang="zh">带版本快照与回滚的存储</span></div><div class="node"><b>Tools</b><span lang="en">MCP clients · web · media</span><span lang="zh">MCP 客户端 · 网页 · 媒体</span></div></div>
+          </div></div>
+          <div class="xh-cell c5" style="background:transparent"><div class="chips" style="margin-top:0"><span class="chip">React</span><span class="chip">Vite</span><span class="chip">Node.js</span><span class="chip">Express</span><span class="chip">Android · Java</span><span class="chip">LLM APIs</span><span class="chip">MCP</span><span class="chip">RAG / Embeddings</span><span class="chip">Web Audio</span><span class="chip">Canvas</span><span class="chip">Prompt Engineering</span></div></div>
         </div>
       </article>
       <!-- 2 物流网络设计 -->
@@ -526,6 +553,10 @@ main.turn{animation:turn .75s var(--ease)}
   // 手机号不直接写在页面里（防爬虫抓号），点了才拼出来
   var pb = document.getElementById('phoneBtn');
   if (pb) pb.addEventListener('click', function(){ var n = ['137', '7982', '0888'], a = document.createElement('a'); a.href = 'tel:+86' + n.join(''); a.textContent = '+86 ' + n.join(' '); a.className = 'phone-btn'; pb.replaceWith(a); });
+  // 标尺上的北京时间
+  var clk = document.getElementById('clock');
+  function tick(){ if (!clk) return; var d = new Date(Date.now() + 8 * 3600000); clk.textContent = 'UTC+8 ' + String(d.getUTCHours()).padStart(2, '0') + ':' + String(d.getUTCMinutes()).padStart(2, '0'); }
+  tick(); setInterval(tick, 20000);
   // 作品：横向翻页（滑动 / 箭头 / 圆点）
   var deck = document.getElementById('deck'), slides = deck.querySelectorAll('.slide'), dots = document.getElementById('dots');
   slides.forEach(function(s, i){ var b = document.createElement('button'); b.setAttribute('aria-label', 'Slide ' + (i + 1)); b.onclick = function(){ goSlide(i); }; dots.appendChild(b); });
