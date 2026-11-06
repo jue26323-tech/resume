@@ -335,6 +335,28 @@ html[data-theme="light"] .aurora{opacity:.18}
 /* 噪点：0.02 的极细颗粒 */
 .grain{opacity:.02;mix-blend-mode:normal;background-size:140px 140px}
 html[data-theme="light"] .grain{opacity:.03}
+/* —— 背景显色加强（2026-11-06，手机上太淡）：电脑和手机都生效 —— */
+html[data-theme="dark"]{--grid:rgba(120,170,255,.075);--cross:rgba(170,205,255,.32);--glow:rgba(110,160,240,.32);--glow2:rgba(60,200,220,.13)}
+html[data-theme="light"]{--grid:rgba(31,63,174,.08);--cross:rgba(31,63,174,.32);--glow:rgba(31,63,174,.14);--glow2:rgba(40,150,190,.09)}
+body{background-image:
+    radial-gradient(ellipse 120% 100% at 50% -10%,var(--glow),transparent 70%),
+    radial-gradient(ellipse 80% 70% at 66% 2%,var(--glow2),transparent 72%),
+    linear-gradient(var(--grid) 1px,transparent 1px),
+    linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:100% 1800px,100% 1800px,64px 64px,64px 64px}
+body::before{opacity:.32}
+html[data-theme="light"] body::before{opacity:.32}
+/* 卡片半透明，底下的格子能透上来 */
+html[data-theme="dark"] .card{background:rgba(15,20,30,.75);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+html[data-theme="light"] .card{background:rgba(247,242,232,.78);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+html[data-theme="dark"] .xh-cell{background:rgba(15,20,30,.55)}
+html[data-theme="light"] .xh-cell{background:rgba(247,242,232,.55)}
+/* 手机：网格缩到 32px，十字刻度跟着每 4 格一个 */
+@media (max-width:640px){
+  body{background-size:100% 1400px,100% 1400px,32px 32px,32px 32px}
+  body::before{background-size:128px 128px;background-position:calc(50% - 64px) -65px;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='128' height='128'><path d='M64 59v10M59 64h10' stroke='white' stroke-width='1'/></svg>")}
+}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.rv{opacity:1;transform:none;filter:none}.name .w span{transform:none}.line-rv{clip-path:none}}
 </style>
 </head>
