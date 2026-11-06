@@ -1,0 +1,559 @@
+<!doctype html>
+<html lang="en" data-lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Celos Cao — Supply Chain × AIGC</title>
+<meta name="description" content="Celos Cao — Supply Chain Coordinator & AIGC Builder. Logistics Engineering, CAFUC (2027). Portfolio & résumé.">
+<meta name="theme-color" content="#0d1830">
+<style>
+:root{
+  --navy:#0d1830; --navy-2:#13223f; --navy-3:#1b2e52;
+  --paper:#f7f2e8; --paper-2:#ede5d4; --paper-3:#e2d7c1;
+  --brass:#c9a86a; --sky:#8fb3e6;
+  --ease:cubic-bezier(.2,.7,.1,1);
+}
+html[data-theme="dark"]{
+  --bg:var(--navy); --bg-2:var(--navy-2); --card:rgba(247,242,232,.045); --card-b:rgba(247,242,232,.10);
+  --fg:var(--paper); --fg-2:rgba(247,242,232,.72); --fg-3:rgba(247,242,232,.48); --accent:var(--brass); --accent-2:var(--sky);
+  --chip:rgba(201,168,106,.12);
+}
+html[data-theme="light"]{
+  --bg:var(--paper); --bg-2:var(--paper-2); --card:rgba(13,24,48,.035); --card-b:rgba(13,24,48,.11);
+  --fg:var(--navy); --fg-2:rgba(13,24,48,.74); --fg-3:rgba(13,24,48,.5); --accent:#9a7533; --accent-2:#2f5ea8;
+  --chip:rgba(13,24,48,.06);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{background:var(--bg);color:var(--fg);font:16px/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",Roboto,sans-serif;
+  -webkit-font-smoothing:antialiased;overflow-x:hidden;transition:background .6s var(--ease),color .6s var(--ease)}
+.serif{font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,"Songti SC","STSong","Noto Serif SC",serif}
+a{color:inherit;text-decoration:none}
+html[data-lang="en"] [lang="zh"], html[data-lang="zh"] [lang="en"]{display:none!important}
+::selection{background:var(--accent);color:var(--navy)}
+
+/* 背景：慢慢漂的光 + 颗粒 */
+.aurora{position:fixed;inset:-20vmax;z-index:-2;pointer-events:none;filter:blur(60px);opacity:.55;transition:opacity .6s}
+html[data-theme="light"] .aurora{opacity:.35}
+.aurora i{position:absolute;border-radius:50%;width:55vmax;height:55vmax;mix-blend-mode:screen}
+html[data-theme="light"] .aurora i{mix-blend-mode:multiply}
+.aurora i:nth-child(1){left:-5%;top:-10%;background:radial-gradient(closest-side,rgba(60,100,180,.55),transparent);animation:drift1 28s ease-in-out infinite}
+.aurora i:nth-child(2){right:-10%;top:20%;background:radial-gradient(closest-side,rgba(201,168,106,.35),transparent);animation:drift2 34s ease-in-out infinite}
+.aurora i:nth-child(3){left:20%;bottom:-25%;background:radial-gradient(closest-side,rgba(143,179,230,.35),transparent);animation:drift3 40s ease-in-out infinite}
+@keyframes drift1{50%{transform:translate(18vmax,12vmax) scale(1.15)}}
+@keyframes drift2{50%{transform:translate(-16vmax,10vmax) scale(.9)}}
+@keyframes drift3{50%{transform:translate(10vmax,-14vmax) scale(1.1)}}
+.grain{position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:.07;mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>")}
+
+/* 顶栏 */
+.progress{position:fixed;left:0;top:0;height:2px;width:100%;transform-origin:0 50%;transform:scaleX(0);background:linear-gradient(90deg,var(--accent),var(--accent-2));z-index:60}
+header.top{position:fixed;left:0;right:0;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;gap:12px;
+  padding:calc(env(safe-area-inset-top,0px) + 14px) clamp(16px,4vw,40px) 14px;transition:background .4s,backdrop-filter .4s,border-color .4s;border-bottom:1px solid transparent}
+header.top.solid{background:color-mix(in srgb,var(--bg) 72%,transparent);backdrop-filter:blur(14px) saturate(1.3);-webkit-backdrop-filter:blur(14px) saturate(1.3);border-bottom-color:var(--card-b)}
+.logo{font-size:20px;letter-spacing:.02em}
+.logo b{color:var(--accent)}
+nav.links{display:flex;gap:22px;font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--fg-2)}
+nav.links a{position:relative;padding:4px 0}
+nav.links a::after{content:"";position:absolute;left:0;right:0;bottom:-2px;height:1px;background:var(--accent);transform:scaleX(0);transform-origin:right;transition:transform .45s var(--ease)}
+nav.links a:hover::after,nav.links a.on::after{transform:scaleX(1);transform-origin:left}
+nav.links a.on{color:var(--fg)}
+.toggles{display:flex;gap:8px;align-items:center}
+.pill{display:inline-flex;align-items:center;border:1px solid var(--card-b);border-radius:999px;padding:3px;background:var(--card);backdrop-filter:blur(8px)}
+.pill button{all:unset;cursor:pointer;font-size:12px;letter-spacing:.06em;padding:5px 11px;border-radius:999px;color:var(--fg-2);transition:all .35s var(--ease)}
+.pill button.on{background:var(--fg);color:var(--bg)}
+.theme-btn{all:unset;cursor:pointer;width:34px;height:34px;border-radius:50%;border:1px solid var(--card-b);display:grid;place-items:center;background:var(--card)}
+.theme-btn svg{width:16px;height:16px;stroke:var(--fg);fill:none;stroke-width:1.6;transition:transform .6s var(--ease)}
+html[data-theme="light"] .theme-btn svg{transform:rotate(180deg)}
+@media (max-width:860px){nav.links{display:none}}
+
+main{position:relative}
+section{position:relative;padding:clamp(80px,12vh,140px) clamp(16px,5vw,64px);max-width:1180px;margin:0 auto}
+.eyebrow{font-size:12px;letter-spacing:.32em;text-transform:uppercase;color:var(--accent);display:flex;align-items:center;gap:12px}
+.eyebrow::before{content:"";width:28px;height:1px;background:currentColor}
+h2.sec{font-size:clamp(30px,5vw,54px);line-height:1.08;font-weight:500;margin:14px 0 36px;letter-spacing:-.01em}
+h2.sec em{font-style:italic;color:var(--accent)}
+
+/* 首屏 */
+.hero{min-height:100svh;display:flex;flex-direction:column;justify-content:center;max-width:1180px;padding-top:120px}
+.hero .eyebrow{margin-bottom:26px}
+.name{font-size:clamp(56px,13vw,150px);line-height:.92;font-weight:400;letter-spacing:-.035em}
+.name .w{display:inline-block;overflow:hidden;vertical-align:bottom;padding-bottom:.06em}
+.name .w span{display:inline-block;transform:translateY(105%) rotate(4deg);transition:transform 1.2s var(--ease)}
+.name em{font-style:italic;color:var(--accent)}
+body.ready .name .w span{transform:none}
+.role{margin-top:28px;font-size:clamp(17px,2.4vw,24px);font-weight:500;max-width:760px}
+.role .amp{color:var(--accent);font-family:Georgia,serif;font-style:italic;padding:0 .15em}
+.tagline{margin-top:12px;color:var(--fg-2);max-width:640px;font-size:clamp(15px,1.7vw,17px)}
+.meta-row{margin-top:26px;display:flex;flex-wrap:wrap;gap:10px 22px;font-size:13px;color:var(--fg-3);letter-spacing:.04em}
+.meta-row span::before{content:"◆";font-size:8px;color:var(--accent);margin-right:8px;vertical-align:2px}
+.cta{margin-top:38px;display:flex;flex-wrap:wrap;gap:12px}
+.btn{position:relative;overflow:hidden;display:inline-flex;align-items:center;gap:10px;padding:13px 22px;border-radius:999px;border:1px solid var(--card-b);font-size:14px;letter-spacing:.04em;background:var(--card);backdrop-filter:blur(8px);transition:transform .4s var(--ease),border-color .4s}
+.btn::before{content:"";position:absolute;inset:0;background:var(--fg);transform:translateY(101%);transition:transform .5s var(--ease);z-index:-1}
+.btn:hover{color:var(--bg);border-color:var(--fg)}.btn:hover::before{transform:none}
+.btn.primary{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+.btn.primary::before{background:var(--accent)}
+.btn svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:1.7}
+.scroll-cue{position:absolute;left:50%;bottom:28px;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;font-size:11px;letter-spacing:.3em;color:var(--fg-3)}
+.scroll-cue i{width:1px;height:44px;background:linear-gradient(var(--fg-3),transparent);position:relative;overflow:hidden}
+.scroll-cue i::after{content:"";position:absolute;left:0;top:-40%;width:1px;height:40%;background:var(--accent);animation:cue 2.2s var(--ease) infinite}
+@keyframes cue{to{top:100%}}
+
+/* 卡片 & 便当网格 */
+.bento{display:grid;grid-template-columns:repeat(12,1fr);gap:14px}
+.card{position:relative;border:1px solid var(--card-b);background:var(--card);border-radius:22px;padding:clamp(20px,2.4vw,30px);overflow:hidden;
+  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);transition:transform .6s var(--ease),border-color .4s;transform-style:preserve-3d}
+.card::after{content:"";position:absolute;inset:0;pointer-events:none;opacity:0;transition:opacity .4s;
+  background:radial-gradient(420px circle at var(--mx,50%) var(--my,50%),color-mix(in srgb,var(--accent) 16%,transparent),transparent 45%)}
+.card:hover::after{opacity:1}
+.card:hover{border-color:color-mix(in srgb,var(--accent) 45%,transparent)}
+.span-3{grid-column:span 3}.span-4{grid-column:span 4}.span-5{grid-column:span 5}.span-6{grid-column:span 6}.span-7{grid-column:span 7}.span-8{grid-column:span 8}.span-12{grid-column:span 12}
+@media (max-width:860px){.bento{grid-template-columns:repeat(2,1fr)}.span-3{grid-column:span 1}.span-4,.span-5,.span-6,.span-7,.span-8,.span-12{grid-column:span 2}}
+.stat .num{font-size:clamp(34px,4.6vw,52px);line-height:1;font-weight:400;letter-spacing:-.02em}
+.stat .num small{font-size:.5em;color:var(--accent);margin-left:2px}
+.stat .lbl{margin-top:10px;font-size:13px;color:var(--fg-2);line-height:1.5}
+.stat .src{margin-top:14px;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--fg-3)}
+
+/* 经历：时间线 */
+.timeline{position:relative;display:grid;gap:18px}
+.job{display:grid;grid-template-columns:200px 1fr;gap:28px}
+@media (max-width:860px){.job{grid-template-columns:1fr;gap:10px}}
+.job .when{font-size:13px;letter-spacing:.12em;color:var(--fg-3);padding-top:6px;text-transform:uppercase}
+.job .when b{display:block;color:var(--accent);font-weight:500;font-size:12px;margin-top:6px}
+.job h3{font-size:clamp(20px,2.4vw,26px);font-weight:500;line-height:1.25}
+.job ul{list-style:none;margin-top:14px;display:grid;gap:10px}
+.job li{position:relative;padding-left:22px;color:var(--fg-2)}
+.job li::before{content:"";position:absolute;left:0;top:.75em;width:10px;height:1px;background:var(--accent)}
+.job li strong{color:var(--fg);font-weight:600}
+.kpis{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.kpi{font-size:12px;padding:6px 12px;border-radius:999px;background:var(--chip);border:1px solid var(--card-b);color:var(--fg)}
+.kpi b{color:var(--accent);font-weight:600;margin-right:4px}
+
+/* 作品：横向翻页 */
+.deck-wrap{position:relative}
+.deck{display:flex;gap:18px;overflow-x:auto;scroll-snap-type:x mandatory;padding:6px 2px 20px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.deck::-webkit-scrollbar{display:none}
+.slide{flex:0 0 min(100%,1080px);scroll-snap-align:center;scroll-snap-stop:always;transition:transform .7s var(--ease),opacity .7s var(--ease)}
+.slide.dim{opacity:.45;transform:scale(.96)}
+@media (max-width:860px){.slide{flex-basis:88%}}
+.proj{display:grid;grid-template-columns:1.15fr .85fr;gap:clamp(18px,3vw,40px);min-height:100%}
+@media (max-width:860px){.proj{grid-template-columns:1fr}}
+.proj .tag{display:inline-block;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);margin-bottom:10px}
+.proj h3{font-size:clamp(26px,3.6vw,40px);line-height:1.1;font-weight:500;letter-spacing:-.01em}
+.proj h3 small{display:block;font-size:.42em;color:var(--fg-2);letter-spacing:0;margin-top:10px;font-weight:400}
+.proj p.lead{margin-top:16px;color:var(--fg-2)}
+.feat{list-style:none;display:grid;gap:12px;margin-top:6px}
+.feat li{display:grid;grid-template-columns:28px 1fr;gap:12px;align-items:start;padding:14px 0;border-top:1px solid var(--card-b)}
+.feat li:first-child{border-top:0}
+.feat .ix{font-size:12px;color:var(--accent);padding-top:3px;font-variant-numeric:tabular-nums}
+.feat b{display:block;font-weight:600;margin-bottom:2px}
+.feat span{color:var(--fg-2);font-size:14px}
+.chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:20px}
+.chip{font-size:12px;padding:5px 11px;border-radius:999px;border:1px solid var(--card-b);color:var(--fg-2)}
+.mini-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:22px}
+.mini-stats div{border:1px solid var(--card-b);border-radius:14px;padding:12px}
+.mini-stats b{display:block;font-size:22px;font-weight:400}
+.mini-stats div>span{font-size:11px;color:var(--fg-3);letter-spacing:.06em}
+.mini-stats b span{font-size:inherit;color:inherit}
+.deck-nav{display:flex;align-items:center;justify-content:space-between;margin-top:10px}
+.dots{display:flex;gap:8px}
+.dots button{all:unset;cursor:pointer;width:26px;height:3px;border-radius:3px;background:var(--card-b);transition:all .5s var(--ease)}
+.dots button.on{width:52px;background:var(--accent)}
+.arrows{display:flex;gap:8px}
+.arrows button{all:unset;cursor:pointer;width:44px;height:44px;border-radius:50%;border:1px solid var(--card-b);display:grid;place-items:center;transition:all .35s var(--ease)}
+.arrows button:hover{background:var(--fg);color:var(--bg)}
+.arrows svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.6}
+
+/* 架构小图 */
+.arch{display:grid;gap:10px;margin-top:4px}
+.arch .row{display:flex;gap:8px;flex-wrap:wrap}
+.arch .node{flex:1;min-width:120px;border:1px solid var(--card-b);border-radius:12px;padding:10px 12px;font-size:12.5px;background:color-mix(in srgb,var(--bg) 60%,transparent)}
+.arch .node b{display:block;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin-bottom:3px;font-weight:600}
+.arch .flow{height:18px;position:relative}
+.arch .flow::before{content:"";position:absolute;left:50%;top:0;bottom:0;width:1px;background:linear-gradient(var(--accent),transparent)}
+
+/* 技能 */
+.skill-card h4{font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);margin-bottom:14px;font-weight:600}
+.bars{display:grid;gap:12px}
+.bar{display:grid;gap:6px}
+.bar .t{display:flex;justify-content:space-between;font-size:13.5px}
+.bar .t span{color:var(--fg-3);font-size:12px}
+.bar i{display:block;height:3px;border-radius:3px;background:var(--card-b);overflow:hidden}
+.bar i::after{content:"";display:block;height:100%;width:var(--v);background:linear-gradient(90deg,var(--accent),var(--accent-2));transform:scaleX(0);transform-origin:left;transition:transform 1.6s var(--ease) .2s}
+.in .bar i::after{transform:none}
+.list{list-style:none;display:grid;gap:9px}
+.list li{display:flex;gap:10px;color:var(--fg-2);font-size:14px}
+.list li::before{content:"✦";color:var(--accent);font-size:11px;padding-top:4px}
+.edu h3{font-size:clamp(22px,2.6vw,30px);font-weight:500;line-height:1.2}
+.edu .sub{color:var(--fg-2);margin-top:6px}
+.edu .when{font-size:12px;letter-spacing:.16em;color:var(--fg-3);text-transform:uppercase;margin-top:14px}
+
+/* 联系 */
+.contact{text-align:center;padding-bottom:60px}
+.contact .big{font-size:clamp(40px,9vw,110px);line-height:1;font-weight:400;letter-spacing:-.03em}
+.contact .big em{color:var(--accent);font-style:italic}
+.phone-btn{all:unset;cursor:pointer;font-size:14px;color:var(--fg-2);border-bottom:1px dashed var(--fg-3);padding-bottom:2px;letter-spacing:.04em}
+.contact .mail{display:inline-block;margin-top:28px;font-size:clamp(17px,2.4vw,24px);border-bottom:1px solid var(--accent);padding-bottom:4px}
+footer{text-align:center;color:var(--fg-3);font-size:12px;letter-spacing:.08em;padding:40px 16px calc(40px + env(safe-area-inset-bottom,0px))}
+
+/* 出场动画 */
+.rv{opacity:0;transform:translateY(38px);filter:blur(8px);transition:opacity 1.1s var(--ease),transform 1.1s var(--ease),filter 1.1s var(--ease);transition-delay:calc(var(--i,0)*90ms)}
+.rv.in{opacity:1;transform:none;filter:none}
+.line-rv{clip-path:inset(0 0 100% 0);transition:clip-path 1.2s var(--ease)}
+.line-rv.in{clip-path:inset(0 0 0 0)}
+
+/* 换语言：整页轻轻翻过去 */
+main.turn{animation:turn .75s var(--ease)}
+@keyframes turn{0%{transform:none;opacity:1}45%{transform:perspective(1400px) rotateX(6deg) translateY(-10px);opacity:0;filter:blur(6px)}55%{transform:perspective(1400px) rotateX(-6deg) translateY(10px);opacity:0;filter:blur(6px)}100%{transform:none;opacity:1}}
+
+/* 换主题：圆形展开 */
+::view-transition-old(root),::view-transition-new(root){animation:none;mix-blend-mode:normal}
+
+.cursor{position:fixed;left:0;top:0;width:8px;height:8px;border-radius:50%;background:var(--accent);pointer-events:none;z-index:80;transform:translate(-50%,-50%);transition:width .3s,height .3s,opacity .3s;opacity:0;mix-blend-mode:difference}
+@media (hover:hover) and (pointer:fine){.cursor{opacity:1}}
+.cursor.big{width:46px;height:46px;opacity:.35}
+
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.rv{opacity:1;transform:none;filter:none}.name .w span{transform:none}.line-rv{clip-path:none}}
+</style>
+</head>
+<body>
+<div class="aurora"><i></i><i></i><i></i></div>
+<div class="grain"></div>
+<div class="progress" id="progress"></div>
+<div class="cursor" id="cursor"></div>
+
+<header class="top" id="top">
+  <a href="#hero" class="logo serif">Celos<b>.</b></a>
+  <nav class="links">
+    <a href="#impact"><span lang="en">Impact</span><span lang="zh">亮点</span></a>
+    <a href="#experience"><span lang="en">Experience</span><span lang="zh">经历</span></a>
+    <a href="#projects"><span lang="en">Projects</span><span lang="zh">作品</span></a>
+    <a href="#skills"><span lang="en">Skills</span><span lang="zh">能力</span></a>
+    <a href="#contact"><span lang="en">Contact</span><span lang="zh">联系</span></a>
+  </nav>
+  <div class="toggles">
+    <div class="pill" role="group" aria-label="Language">
+      <button data-set-lang="en" class="on">EN</button><button data-set-lang="zh">中文</button>
+    </div>
+    <button class="theme-btn" id="themeBtn" aria-label="Toggle theme"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 4a8 8 0 0 1 0 16z" fill="currentColor" stroke="none"/></svg></button>
+  </div>
+</header>
+
+<main id="main">
+<!-- 首屏 -->
+<section class="hero" id="hero">
+  <div class="eyebrow"><span lang="en">Portfolio · Résumé · 2026</span><span lang="zh">作品集 · 简历 · 2026</span></div>
+  <h1 class="name serif"><span class="w"><span>Celos</span></span> <span class="w"><span><em>Cao</em></span></span></h1>
+  <p class="role rv" style="--i:4"><span lang="en">Supply Chain Coordinator <span class="amp">&amp;</span> AIGC Builder</span><span lang="zh">供应链协调 <span class="amp">&amp;</span> AIGC 产品构建者</span></p>
+  <p class="tagline rv" style="--i:5"><span lang="en">Bridging physical supply chains with intelligent AI workflows — from incident dashboards at JD.com to a full-stack AI companion app I designed, built and run on my own.</span><span lang="zh">把实体供应链和智能 AI 工作流接起来——从京东的异常处理看板，到我独立设计、开发、上线并持续运营的全栈 AI 陪伴应用。</span></p>
+  <div class="meta-row rv" style="--i:6">
+    <span lang="en">Logistics Engineering · CAFUC · Class of 2027</span><span lang="zh">物流工程 · 中国民用航空飞行学院 · 2027 届</span>
+    <span lang="en">Mandarin / English</span><span lang="zh">中文 / 英文</span>
+    <span lang="en">Open to remote & on-site</span><span lang="zh">可远程 / 可到岗</span>
+  </div>
+  <div class="cta rv" style="--i:7">
+    <a class="btn primary" id="cvBtn" href="cv-en.pdf" download><svg viewBox="0 0 24 24"><path d="M12 4v11m0 0-4-4m4 4 4-4M5 20h14"/></svg><span lang="en">Download CV</span><span lang="zh">下载简历</span></a>
+    <a class="btn" href="mailto:Caoyx912@outlook.com"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg><span lang="en">Email me</span><span lang="zh">发邮件</span></a>
+    <a class="btn" href="https://www.linkedin.com/in/celos-cao" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M8 10v7M8 7v.01M12 17v-4a2 2 0 0 1 4 0v4M12 10v7"/></svg>LinkedIn</a>
+    <a class="btn" href="https://github.com/jue26323-tech" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path d="M9 19c-4 1.5-4-2-6-2m12 4v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 0 0-1.3-3.2 4.2 4.2 0 0 0-.1-3.2s-1.1-.3-3.5 1.3a12 12 0 0 0-6.2 0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2 0 0 0-.1 3.2A4.6 4.6 0 0 0 4 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/></svg>GitHub</a>
+  </div>
+  <div class="scroll-cue"><span lang="en">SCROLL</span><span lang="zh">向下</span><i></i></div>
+</section>
+
+<!-- 亮点数字 -->
+<section id="impact">
+  <div class="eyebrow rv"><span lang="en">01 — Impact</span><span lang="zh">01 — 亮点</span></div>
+  <h2 class="sec serif rv"><span lang="en">Numbers I <em>moved</em>.</span><span lang="zh">我推动过的<em>数字</em>。</span></h2>
+  <div class="bento">
+    <div class="card stat span-3 rv" style="--i:0"><div class="num serif"><span data-count="28">0</span><small>%</small></div><div class="lbl"><span lang="en">Faster anomaly resolution (4.3 → 3.1 days)</span><span lang="zh">异常平均处理时长缩短（4.3 → 3.1 天）</span></div><div class="src">JD.com</div></div>
+    <div class="card stat span-3 rv" style="--i:1"><div class="num serif"><span data-count="98.89" data-dec="2">0</span><small>%</small></div><div class="lbl"><span lang="en">Closure rate across 813 incident cases</span><span lang="zh">813 起异常工单的结案率</span></div><div class="src">JD.com</div></div>
+    <div class="card stat span-3 rv" style="--i:2"><div class="num serif"><span data-count="97.86" data-dec="2">0</span><small>%</small></div><div class="lbl"><span lang="en">On-time delivery over 60+ purchase orders</span><span lang="zh">60+ 张采购单的准时交付率</span></div><div class="src">Xinjuxin Trading</div></div>
+    <div class="card stat span-3 rv" style="--i:3"><div class="num serif"><span data-count="42">0</span><small>%</small></div><div class="lbl"><span lang="en">Less slow-moving inventory after ABC analysis</span><span lang="zh">ABC 分类后滞销库存占比下降</span></div><div class="src">Xinjuxin Trading</div></div>
+    <div class="card stat span-6 rv" style="--i:4"><div class="num serif"><span data-count="26">0</span><small>k+</small></div><div class="lbl"><span lang="en">Lines of code shipped solo in Xiao-Home — web, backend and Android, 260+ commits</span><span lang="zh">在「霄的家」里独立写下并上线的代码行数——网页、后端、安卓三端，260+ 次提交</span></div><div class="src">AIGC Project</div></div>
+    <div class="card stat span-6 rv" style="--i:5"><div class="num serif"><span data-count="93.99" data-dec="2">0</span><small>%</small></div><div class="lbl"><span lang="en">Route cost improvement with hybrid GA–PSO (31 → 6 nodes)</span><span lang="zh">遗传-粒子群混合算法优化后的路径改进（节点 31 → 6）</span></div><div class="src">Logistics Design · 3rd Prize</div></div>
+  </div>
+</section>
+
+<!-- 经历 -->
+<section id="experience">
+  <div class="eyebrow rv"><span lang="en">02 — Experience</span><span lang="zh">02 — 经历</span></div>
+  <h2 class="sec serif rv"><span lang="en">Hands on the <em>supply chain</em>.</span><span lang="zh">亲手摸过的<em>供应链</em>。</span></h2>
+  <div class="timeline">
+    <article class="card job rv">
+      <div class="when">Jun – Sep 2026<b>JD.com · 京东</b></div>
+      <div>
+        <h3><span lang="en">Supply Chain Incident Handling Intern</span><span lang="zh">供应链异常处理实习生</span></h3>
+        <ul>
+          <li><span lang="en">Cut average anomaly resolution time from <strong>4.3 to 3.1 days (−28%)</strong> through fast root-cause analysis and coordination across warehouse, customer service and QA teams.</span><span lang="zh">通过快速定位根因、协调仓库 / 客服 / 质检多部门，把异常平均处理时长从 <strong>4.3 天压到 3.1 天（−28%）</strong>。</span></li>
+          <li><span lang="en">Built a departmental anomaly dashboard that applies upstream transport standards to downstream loading quality, contributing to overall supply-chain cost reduction.</span><span lang="zh">搭建部门异常看板，把上游运输标准落到下游装车质量上，助力整体供应链降本。</span></li>
+          <li><span lang="en">Owned <strong>813 incident cases end-to-end at a 98.89% closure rate</strong>, running full SOPs for damage and error handling, claims and reissues.</span><span lang="zh">端到端负责 <strong>813 起异常工单，结案率 98.89%</strong>，完整执行破损、错发的处理 SOP，跟进理赔与补发。</span></li>
+          <li><span lang="en">Created a classification ledger for abnormal orders (transport damage, packaging loss, system errors) with weekly analysis reports — driving packaging-standard changes that <strong>cut repeat transport damage by 15%</strong>.</span><span lang="zh">建立异常订单分类台账（运输破损 / 包装缺失 / 系统错误）并每周出分析报告，推动包装标准改进，<strong>同类运输破损复发下降 15%</strong>。</span></li>
+        </ul>
+        <div class="kpis"><span class="kpi"><b>−28%</b><span lang="en">resolution time</span><span lang="zh">处理时长</span></span><span class="kpi"><b>813</b><span lang="en">cases</span><span lang="zh">工单</span></span><span class="kpi"><b>98.89%</b><span lang="en">closure</span><span lang="zh">结案率</span></span><span class="kpi"><b>−15%</b><span lang="en">repeat damage</span><span lang="zh">破损复发</span></span></div>
+      </div>
+    </article>
+    <article class="card job rv">
+      <div class="when">Jan – Apr 2025<b><span lang="en">Xinjuxin Trading Co., Ltd.</span><span lang="zh">鑫聚鑫商贸有限公司</span></b></div>
+      <div>
+        <h3><span lang="en">Purchasing Intern</span><span lang="zh">采购实习生</span></h3>
+        <ul>
+          <li><span lang="en">Worked directly with multiple upstream suppliers; independently handled supplier selection, price benchmarking and order placement across <strong>60+ purchase orders at 97.86% on-time delivery</strong>.</span><span lang="zh">直接对接多家上游供应商，独立完成选品比价、供应商筛选与下单，累计 <strong>60+ 张采购单，准时交付率 97.86%</strong>。</span></li>
+          <li><span lang="en">Ran weekly physical counts, built variance-tracking sheets in Excel and planned replenishment from 3-month rolling sales — <strong>inventory turnover days 32 → 24</strong>.</span><span lang="zh">每周盘点实物，用 Excel 建差异追踪表，按近 3 个月滚动销量制定补货计划——<strong>库存周转天数 32 → 24</strong>。</span></li>
+          <li><span lang="en">Maintained purchase–sales–inventory ledgers and applied ABC classification to flag slow movers; with sales, ran targeted clearance — <strong>shrinkage 5.6% → 2.9%</strong>, slow-moving share <strong>−42%</strong>.</span><span lang="zh">维护进销存台账，用 ABC 分类找出滞销品，联合销售定向清仓——<strong>库存损耗 5.6% → 2.9%</strong>，滞销占比 <strong>−42%</strong>。</span></li>
+        </ul>
+        <div class="kpis"><span class="kpi"><b>60+</b>POs</span><span class="kpi"><b>97.86%</b><span lang="en">on-time</span><span lang="zh">准时交付</span></span><span class="kpi"><b>32→24</b><span lang="en">turnover days</span><span lang="zh">周转天数</span></span><span class="kpi"><b>5.6→2.9%</b><span lang="en">shrinkage</span><span lang="zh">损耗</span></span></div>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- 作品 -->
+<section id="projects">
+  <div class="eyebrow rv"><span lang="en">03 — Featured Projects</span><span lang="zh">03 — 代表作品</span></div>
+  <h2 class="sec serif rv"><span lang="en">Things I <em>built</em>.</span><span lang="zh">我<em>做出来</em>的东西。</span></h2>
+  <div class="deck-wrap rv">
+    <div class="deck" id="deck">
+      <!-- 1 霄的家 -->
+      <article class="slide card">
+        <div class="proj">
+          <div>
+            <span class="tag"><span lang="en">AIGC · Full-stack · Solo · 2026 – now</span><span lang="zh">AIGC · 全栈 · 独立开发 · 2026 至今</span></span>
+            <h3 class="serif">Xiao-Home<small><span lang="en">An AI companion app with long-term memory, voice and agent tools</span><span lang="zh">一款有长期记忆、会说话、能自己用工具的 AI 陪伴应用</span></small></h3>
+            <p class="lead"><span lang="en">I took it from idea to a product used every day: web app, backend and a native Android app, shipped in small daily iterations driven by real user feedback.</span><span lang="zh">从一个想法做到每天都在用的产品：网页端、后端和安卓原生 App，按真实使用反馈小步快跑、天天迭代。</span></p>
+            <ul class="feat">
+              <li><span class="ix">01</span><div><b><span lang="en">LLM engineering & cost control</span><span lang="zh">大模型工程与成本控制</span></b><span><span lang="en">Multi-provider model access (Claude / Gemini), streaming replies, prompt caching, and cheap-model routing for background jobs. Structured action tags in replies are parsed into real side effects.</span><span lang="zh">接入多家模型（Claude / Gemini），流式输出、提示词缓存，后台任务走低价模型；回复里的结构化动作标签会被解析成真实的操作。</span></span></div></li>
+              <li><span class="ix">02</span><div><b><span lang="en">Long-term memory system</span><span lang="zh">长期记忆系统</span></b><span><span lang="en">Layered memory with vector search (embeddings), emotional valence/arousal weighting and nightly consolidation. After a real data-loss incident I added fail-safe reads and one-tap version restore.</span><span lang="zh">分层记忆 + 向量检索、情绪效价/唤醒加权、夜间整理巩固；经历过一次真实的数据丢失后，补上了「读失败不覆盖」和一键回滚历史版本。</span></span></div></li>
+              <li><span class="ix">03</span><div><b><span lang="en">Agents & MCP integrations</span><span lang="zh">智能体与 MCP 集成</span></b><span><span lang="en">Model Context Protocol clients let the AI act in external services step by step, with per-step logs, a live progress view and resume-after-restart.</span><span lang="zh">用 MCP（模型上下文协议）让 AI 一步步操作外部服务，每一步都有日志、能实时查看进度，后台重启后能接着做。</span></span></div></li>
+              <li><span class="ix">04</span><div><b><span lang="en">Multimodal experience</span><span lang="zh">多模态体验</span></b><span><span lang="en">Voice in/out with emotional TTS, on-device audio analysis, 3D binaural audio, image and long-screenshot understanding, and procedural illustrations rendered in a sandboxed worker.</span><span lang="zh">语音输入输出（情绪化 TTS）、手机端声学分析、双耳 3D 空间音频、图片与长截图理解、在沙盒里运行的程序化插画。</span></span></div></li>
+            </ul>
+          </div>
+          <div>
+            <div class="arch">
+              <div class="row"><div class="node"><b>Client</b><span lang="en">React web app + Android (WebView + native notifications, calls, overlays)</span><span lang="zh">React 网页 + 安卓（WebView + 原生通知、来电、悬浮窗）</span></div></div>
+              <div class="flow"></div>
+              <div class="row"><div class="node"><b>API</b><span lang="en">Node.js / Express · streaming · scheduling</span><span lang="zh">Node.js / Express · 流式 · 定时任务</span></div><div class="node"><b>Models</b><span lang="en">LLM router · embeddings · vision · TTS</span><span lang="zh">模型路由 · 向量 · 视觉 · 语音</span></div></div>
+              <div class="flow"></div>
+              <div class="row"><div class="node"><b>Memory</b><span lang="en">Versioned store with snapshots & restore</span><span lang="zh">带版本快照与回滚的存储</span></div><div class="node"><b>Tools</b><span lang="en">MCP clients · web · media</span><span lang="zh">MCP 客户端 · 网页 · 媒体</span></div></div>
+            </div>
+            <div class="mini-stats">
+              <div><b class="serif"><span data-count="26">0</span>k+</b><span lang="en">lines of code</span><span lang="zh">行代码</span></div>
+              <div><b class="serif"><span data-count="260">0</span>+</b><span lang="en">commits</span><span lang="zh">次提交</span></div>
+              <div><b class="serif">3</b><span lang="en">platforms</span><span lang="zh">端</span></div>
+            </div>
+            <div class="chips"><span class="chip">React</span><span class="chip">Vite</span><span class="chip">Node.js</span><span class="chip">Express</span><span class="chip">Android · Java</span><span class="chip">LLM APIs</span><span class="chip">MCP</span><span class="chip">RAG / Embeddings</span><span class="chip">Web Audio</span><span class="chip">Canvas</span><span class="chip">Prompt Engineering</span></div>
+          </div>
+        </div>
+      </article>
+      <!-- 2 物流网络设计 -->
+      <article class="slide card">
+        <div class="proj">
+          <div>
+            <span class="tag"><span lang="en">Optimisation · 3rd Prize</span><span lang="zh">优化建模 · 三等奖</span></span>
+            <h3 class="serif"><span lang="en">Logistics Network Design</span><span lang="zh">物流网络设计</span><small><span lang="en">Hybrid genetic algorithm × particle swarm optimisation for nodes and routes</span><span lang="zh">遗传算法 × 粒子群混合优化，选址与路径一起算</span></small></h3>
+            <p class="lead"><span lang="en">Modelled the network as a joint location–routing problem and solved it with a hybrid GA–PSO, shrinking the node set from 31 to 6 while keeping service coverage.</span><span lang="zh">把网络建成选址-路径联合问题，用 GA–PSO 混合算法求解，在保证覆盖的前提下把节点从 31 个压到 6 个。</span></p>
+          </div>
+          <div class="mini-stats" style="align-self:center">
+            <div><b class="serif">31→6</b><span lang="en">nodes</span><span lang="zh">节点</span></div>
+            <div><b class="serif">31.02</b>TSP</div>
+            <div><b class="serif"><span data-count="93.99" data-dec="2">0</span>%</b><span lang="en">gain</span><span lang="zh">提升</span></div>
+          </div>
+        </div>
+      </article>
+      <!-- 3 市场调研 -->
+      <article class="slide card">
+        <div class="proj">
+          <div>
+            <span class="tag"><span lang="en">Research · 1st in university · 2nd provincial</span><span lang="zh">调研 · 校一等 · 省二等</span></span>
+            <h3 class="serif"><span lang="en">Market Research</span><span lang="zh">市场调研大赛</span><small><span lang="en">Full research cycle — from questionnaire to strategy</span><span lang="zh">完整调研流程——从问卷到策略</span></small></h3>
+            <p class="lead"><span lang="en">Designed the questionnaire, cleaned the data and analysed it in SPSS, then turned the findings into a 19-page report with strategy recommendations.</span><span lang="zh">设计问卷、清洗数据、用 SPSS 分析，最后写成 19 页报告并给出策略建议。</span></p>
+          </div>
+          <div class="mini-stats" style="align-self:center">
+            <div><b class="serif"><span data-count="100">0</span></b><span lang="en">responses</span><span lang="zh">份回收</span></div>
+            <div><b class="serif">19</b><span lang="en">page report</span><span lang="zh">页报告</span></div>
+            <div><b class="serif">SPSS</b><span lang="en">analysis</span><span lang="zh">分析</span></div>
+          </div>
+        </div>
+      </article>
+      <!-- 4 交通科技 -->
+      <article class="slide card">
+        <div class="proj">
+          <div>
+            <span class="tag"><span lang="en">Control systems · 2nd Prize</span><span lang="zh">控制系统 · 二等奖</span></span>
+            <h3 class="serif"><span lang="en">Transport Technology</span><span lang="zh">交通科技大赛</span><small><span lang="en">Matlab / CarSim control algorithms with HIL verification</span><span lang="zh">Matlab / CarSim 控制算法 + 硬件在环验证</span></small></h3>
+            <p class="lead"><span lang="en">Developed lane-keeping, collision-avoidance and intersection control algorithms and verified them with hardware-in-the-loop testing.</span><span lang="zh">开发车道保持、避撞、路口通行控制算法，并做硬件在环（HIL）验证。</span></p>
+          </div>
+          <div class="chips" style="align-self:center"><span class="chip">Matlab</span><span class="chip">CarSim</span><span class="chip">HIL</span><span class="chip" lang="en">Lane keeping</span><span class="chip" lang="zh">车道保持</span><span class="chip" lang="en">Collision avoidance</span><span class="chip" lang="zh">避撞</span></div>
+        </div>
+      </article>
+    </div>
+    <div class="deck-nav">
+      <div class="dots" id="dots"></div>
+      <div class="arrows"><button id="prev" aria-label="Previous"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button><button id="next" aria-label="Next"><svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></button></div>
+    </div>
+  </div>
+</section>
+
+<!-- 能力 -->
+<section id="skills">
+  <div class="eyebrow rv"><span lang="en">04 — Skills & Education</span><span lang="zh">04 — 能力与教育</span></div>
+  <h2 class="sec serif rv"><span lang="en">Operations mind, <em>builder</em> hands.</span><span lang="zh">运营的脑子，<em>开发者</em>的手。</span></h2>
+  <div class="bento">
+    <div class="card edu span-7 rv" style="--i:0">
+      <div class="eyebrow" style="margin-bottom:14px"><span lang="en">Education</span><span lang="zh">教育背景</span></div>
+      <h3 class="serif"><span lang="en">Civil Aviation Flight University of China</span><span lang="zh">中国民用航空飞行学院</span></h3>
+      <div class="sub"><span lang="en">B.Eng., Logistics Engineering and Management</span><span lang="zh">物流工程与管理 · 本科</span></div>
+      <div class="when">Sep 2023 – Jun 2027</div>
+      <ul class="list" style="margin-top:18px">
+        <li><span lang="en">Core courses: Supply Chain Management, Logistics Project Management, Logistics Systems Engineering, Logistics System Planning & Design</span><span lang="zh">核心课程：供应链管理、物流项目管理、物流系统工程、物流系统规划与设计</span></li>
+        <li><span lang="en">Certifications: CET-4 · Assistant Logistics Specialist · Kingdee Junior Supply Chain Implementation Consultant</span><span lang="zh">证书：大学英语四级 · 助理物流师 · 金蝶初级供应链实施顾问</span></li>
+      </ul>
+    </div>
+    <div class="card skill-card span-5 rv" style="--i:1">
+      <h4><span lang="en">Data & Tools</span><span lang="zh">数据与工具</span></h4>
+      <div class="bars">
+        <div class="bar"><div class="t">Excel <span lang="en">advanced</span><span lang="zh">熟练</span></div><i style="--v:92%"></i></div>
+        <div class="bar"><div class="t">Power BI · SPSS</div><i style="--v:78%"></i></div>
+        <div class="bar"><div class="t">SQL · Python</div><i style="--v:70%"></i></div>
+        <div class="bar"><div class="t">WMS (JD) · ERP · SAP <span lang="en">basics</span><span lang="zh">基础</span></div><i style="--v:66%"></i></div>
+        <div class="bar"><div class="t">Matlab · CarSim</div><i style="--v:60%"></i></div>
+      </div>
+    </div>
+    <div class="card skill-card span-4 rv" style="--i:2">
+      <h4><span lang="en">Supply Chain</span><span lang="zh">供应链</span></h4>
+      <ul class="list">
+        <li><span lang="en">Sourcing, supplier benchmarking & PO follow-up</span><span lang="zh">寻源、供应商比价与采购跟单</span></li>
+        <li><span lang="en">Inventory control, ABC analysis, replenishment</span><span lang="zh">库存管控、ABC 分类、补货计划</span></li>
+        <li><span lang="en">Incident SOPs, claims & reissues</span><span lang="zh">异常处理 SOP、理赔与补发</span></li>
+        <li><span lang="en">Procurement full-process SOP & flowcharts</span><span lang="zh">采购全流程 SOP 与流程图</span></li>
+      </ul>
+    </div>
+    <div class="card skill-card span-4 rv" style="--i:3">
+      <h4><span lang="en">AI & Building</span><span lang="zh">AI 与开发</span></h4>
+      <ul class="list">
+        <li><span lang="en">LLM apps & prompt engineering</span><span lang="zh">大模型应用与提示词工程</span></li>
+        <li><span lang="en">RAG / embeddings, agents & MCP</span><span lang="zh">RAG / 向量检索、智能体与 MCP</span></li>
+        <li><span lang="en">React, Node.js, Android basics</span><span lang="zh">React、Node.js、安卓基础</span></li>
+        <li><span lang="en">AI-assisted data analysis</span><span lang="zh">用 AI 辅助数据分析</span></li>
+      </ul>
+    </div>
+    <div class="card skill-card span-4 rv" style="--i:4">
+      <h4><span lang="en">Remote Readiness</span><span lang="zh">远程协作</span></h4>
+      <ul class="list">
+        <li><span lang="en">Clear written, asynchronous communication</span><span lang="zh">清晰的书面异步沟通</span></li>
+        <li><span lang="en">Documentation-first, Git / GitHub workflow</span><span lang="zh">先写文档、Git / GitHub 工作流</span></li>
+        <li><span lang="en">Self-directed delivery — shipped a product solo</span><span lang="zh">自驱交付——独立做完并上线一款产品</span></li>
+        <li><span lang="en">Mandarin (native) · English (CET-4)</span><span lang="zh">中文（母语）· 英文（CET-4）</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 联系 -->
+<section class="contact" id="contact">
+  <div class="eyebrow rv" style="justify-content:center"><span lang="en">05 — Contact</span><span lang="zh">05 — 联系</span></div>
+  <p class="big serif rv" style="margin-top:22px"><span lang="en">Let's build <em>something</em>.</span><span lang="zh">一起做点<em>什么</em>吧。</span></p>
+  <a class="mail rv" href="mailto:Caoyx912@outlook.com">Caoyx912@outlook.com</a>
+  <div class="rv" style="margin-top:12px"><a class="phone-btn" href="https://www.linkedin.com/in/celos-cao" target="_blank" rel="noopener">linkedin.com/in/celos-cao</a></div>
+  <div class="rv" style="margin-top:14px"><button class="phone-btn" id="phoneBtn"><span lang="en">Show phone number</span><span lang="zh">显示手机号</span></button></div>
+  <div class="cta rv" style="justify-content:center"><a class="btn primary" id="cvBtn2" href="cv-en.pdf" download><svg viewBox="0 0 24 24"><path d="M12 4v11m0 0-4-4m4 4 4-4M5 20h14"/></svg><span lang="en">Download CV (PDF)</span><span lang="zh">下载简历（PDF）</span></a></div>
+</section>
+</main>
+<footer>© 2026 Celos Cao · <span lang="en">Designed & built by hand</span><span lang="zh">亲手设计与搭建</span></footer>
+
+<script>
+(function(){
+  var root = document.documentElement, main = document.getElementById('main');
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function store(k, v){ try { if (v === undefined) return localStorage.getItem(k); localStorage.setItem(k, v); } catch(e){ return null; } }
+
+  // 语言：默认英文；网址带 #zh 或 ?lang=zh 打开中文
+  function setLang(l, anim){
+    if (root.dataset.lang === l) return;
+    function apply(){
+      root.dataset.lang = l; root.lang = l === 'zh' ? 'zh-CN' : 'en';
+      document.querySelectorAll('[data-set-lang]').forEach(function(b){ b.classList.toggle('on', b.dataset.setLang === l); });
+      ['cvBtn','cvBtn2'].forEach(function(id){ var a = document.getElementById(id); if (a) a.href = l === 'zh' ? 'cv-zh.pdf' : 'cv-en.pdf'; });
+      document.title = l === 'zh' ? 'Celos Cao · 供应链 × AIGC' : 'Celos Cao — Supply Chain × AIGC';
+      store('lang', l);
+    }
+    if (anim && !reduce){ main.classList.remove('turn'); void main.offsetWidth; main.classList.add('turn'); setTimeout(apply, 330); }
+    else apply();
+  }
+  var q = (location.search.match(/lang=(zh|en)/) || [])[1] || (location.hash === '#zh' ? 'zh' : '') || store('lang') || 'en';
+  root.dataset.lang = ''; setLang(q, false);
+  document.querySelectorAll('[data-set-lang]').forEach(function(b){ b.addEventListener('click', function(){ setLang(b.dataset.setLang, true); }); });
+
+  // 主题：圆形展开（支持 View Transitions 的浏览器）
+  var th = store('theme'); if (th) root.dataset.theme = th;
+  document.getElementById('themeBtn').addEventListener('click', function(e){
+    var next = root.dataset.theme === 'dark' ? 'light' : 'dark';
+    function go(){ root.dataset.theme = next; store('theme', next); document.querySelector('meta[name=theme-color]').content = next === 'dark' ? '#0d1830' : '#f7f2e8'; }
+    if (!document.startViewTransition || reduce) return go();
+    var x = e.clientX, y = e.clientY, r = Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y));
+    var t = document.startViewTransition(go);
+    t.ready.then(function(){ root.animate({ clipPath: ['circle(0 at ' + x + 'px ' + y + 'px)', 'circle(' + r + 'px at ' + x + 'px ' + y + 'px)'] }, { duration: 700, easing: 'cubic-bezier(.2,.7,.1,1)', pseudoElement: '::view-transition-new(root)' }); });
+  });
+
+  // 出场 + 数字滚动
+  function countUp(el){
+    var to = parseFloat(el.dataset.count), dec = +(el.dataset.dec || 0), t0 = null, dur = 1600;
+    if (reduce){ el.textContent = to.toFixed(dec); return; }
+    function step(t){ if (!t0) t0 = t; var p = Math.min(1, (t - t0) / dur), e = 1 - Math.pow(1 - p, 4); el.textContent = (to * e).toFixed(dec); if (p < 1) requestAnimationFrame(step); }
+    requestAnimationFrame(step);
+  }
+  var io = new IntersectionObserver(function(es){ es.forEach(function(en){
+    if (!en.isIntersecting) return;
+    en.target.classList.add('in');
+    en.target.querySelectorAll('[data-count]').forEach(function(c){ if (!c.dataset.done){ c.dataset.done = 1; countUp(c); } });
+    io.unobserve(en.target);
+  }); }, { threshold: .18, rootMargin: '0px 0px -6% 0px' });
+  document.querySelectorAll('.rv, .card').forEach(function(el){ io.observe(el); });
+  requestAnimationFrame(function(){ setTimeout(function(){ document.body.classList.add('ready'); }, 120); });
+
+  // 顶栏、进度条、当前小节
+  var top = document.getElementById('top'), bar = document.getElementById('progress');
+  var secs = ['impact','experience','projects','skills','contact'].map(function(id){ return document.getElementById(id); });
+  var links = document.querySelectorAll('nav.links a');
+  function onScroll(){
+    var h = document.documentElement.scrollHeight - innerHeight;
+    bar.style.transform = 'scaleX(' + (h > 0 ? scrollY / h : 0) + ')';
+    top.classList.toggle('solid', scrollY > 40);
+    var cur = -1; secs.forEach(function(s, i){ if (s.getBoundingClientRect().top < innerHeight * .4) cur = i; });
+    links.forEach(function(a, i){ a.classList.toggle('on', i === cur); });
+  }
+  addEventListener('scroll', onScroll, { passive: true }); onScroll();
+
+  // 手机号不直接写在页面里（防爬虫抓号），点了才拼出来
+  var pb = document.getElementById('phoneBtn');
+  if (pb) pb.addEventListener('click', function(){ var n = ['137', '7982', '0888'], a = document.createElement('a'); a.href = 'tel:+86' + n.join(''); a.textContent = '+86 ' + n.join(' '); a.className = 'phone-btn'; pb.replaceWith(a); });
+  // 作品：横向翻页（滑动 / 箭头 / 圆点）
+  var deck = document.getElementById('deck'), slides = deck.querySelectorAll('.slide'), dots = document.getElementById('dots');
+  slides.forEach(function(s, i){ var b = document.createElement('button'); b.setAttribute('aria-label', 'Slide ' + (i + 1)); b.onclick = function(){ goSlide(i); }; dots.appendChild(b); });
+  function curSlide(){ var c = deck.scrollLeft + deck.clientWidth / 2, best = 0, bd = 1e9; slides.forEach(function(s, i){ var m = s.offsetLeft + s.offsetWidth / 2, d = Math.abs(m - c); if (d < bd){ bd = d; best = i; } }); return best; }
+  function goSlide(i){ i = Math.max(0, Math.min(slides.length - 1, i)); var s = slides[i]; deck.scrollTo({ left: s.offsetLeft - (deck.clientWidth - s.offsetWidth) / 2, behavior: reduce ? 'auto' : 'smooth' }); }
+  function mark(){ var c = curSlide(); dots.querySelectorAll('button').forEach(function(b, i){ b.classList.toggle('on', i === c); }); slides.forEach(function(s, i){ s.classList.toggle('dim', i !== c); }); }
+  deck.addEventListener('scroll', function(){ requestAnimationFrame(mark); }, { passive: true }); mark();
+  document.getElementById('prev').onclick = function(){ goSlide(curSlide() - 1); };
+  document.getElementById('next').onclick = function(){ goSlide(curSlide() + 1); };
+  // 电脑上竖着滚轮划过作品区时不劫持；拖拽翻页
+  var drag = null;
+  deck.addEventListener('pointerdown', function(e){ if (e.pointerType !== 'mouse') return; drag = { x: e.clientX, l: deck.scrollLeft }; deck.style.scrollSnapType = 'none'; });
+  addEventListener('pointermove', function(e){ if (drag) deck.scrollLeft = drag.l - (e.clientX - drag.x); });
+  addEventListener('pointerup', function(){ if (!drag) return; drag = null; deck.style.scrollSnapType = ''; goSlide(curSlide()); });
+
+  // 电脑上：卡片跟着鼠标的光、轻微倾斜、小光标
+  if (matchMedia('(hover:hover) and (pointer:fine)').matches && !reduce){
+    var cur = document.getElementById('cursor');
+    addEventListener('mousemove', function(e){ cur.style.left = e.clientX + 'px'; cur.style.top = e.clientY + 'px'; });
+    document.querySelectorAll('a,button').forEach(function(el){ el.addEventListener('mouseenter', function(){ cur.classList.add('big'); }); el.addEventListener('mouseleave', function(){ cur.classList.remove('big'); }); });
+    document.querySelectorAll('.card:not(.slide)').forEach(function(c){
+      c.addEventListener('mousemove', function(e){ var r = c.getBoundingClientRect(), px = (e.clientX - r.left) / r.width, py = (e.clientY - r.top) / r.height;
+        c.style.setProperty('--mx', px * 100 + '%'); c.style.setProperty('--my', py * 100 + '%');
+        c.style.transform = 'perspective(900px) rotateX(' + ((.5 - py) * 4) + 'deg) rotateY(' + ((px - .5) * 5) + 'deg)'; });
+      c.addEventListener('mouseleave', function(){ c.style.transform = ''; });
+    });
+  }
+})();
+</script>
+</body>
+</html>
