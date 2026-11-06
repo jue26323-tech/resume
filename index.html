@@ -304,6 +304,37 @@ h2.sec{margin:16px 0 40px}
 .card .tag,.comp .tag,.card>.eyebrow:first-child,.skill-card h4{padding-right:40px}
 /* 三张竞赛卡：标签、标题、正文、数字四行用 subgrid 对齐，标签折行时标题也一起往下 */
 @supports (grid-template-rows:subgrid){.comps .comp{display:grid;grid-row:span 4;grid-template-rows:subgrid;gap:8px}.comps .comp-figs{margin-top:0;align-self:end}}
+/* —— 背景肌理（2026-11-06）：64px 工程暗网格 + 节点十字、顶部深海微光、极细噪点 —— */
+html[data-theme="dark"]{--grid:rgba(255,255,255,.025);--cross:rgba(199,215,242,.10);--glow:rgba(110,160,230,.16);--glow2:rgba(60,190,210,.06)}
+html[data-theme="light"]{--grid:rgba(13,24,48,.045);--cross:rgba(31,63,174,.14);--glow:rgba(31,63,174,.08);--glow2:rgba(60,150,190,.05)}
+body{background-color:var(--bg);
+  background-image:
+    radial-gradient(ellipse 70% 60% at 50% -8%,var(--glow),transparent 70%),
+    radial-gradient(ellipse 40% 34% at 62% 4%,var(--glow2),transparent 72%),
+    linear-gradient(var(--grid) 1px,transparent 1px),
+    linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:100% 1100px,100% 1100px,64px 64px,64px 64px;
+  background-repeat:no-repeat,no-repeat,repeat,repeat;
+  background-position:0 0,0 0,center -1px,calc(50% - 1px) 0}
+/* 网格节点上的 + 刻度：每隔 4 格（256px）一个，和网格对齐 */
+body::before{content:"";position:absolute;left:0;right:0;top:0;height:100%;min-height:100vh;z-index:-1;pointer-events:none;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='256' height='256'><path d='M128 123v10M123 128h10' stroke='white' stroke-width='1'/></svg>");
+  background-size:256px 256px;background-position:calc(50% - 128px) -129px;opacity:.10}
+html[data-theme="light"] body::before{filter:invert(1);opacity:.14}
+body{position:relative}
+/* 主内容四角的大号刻度 */
+section{background-image:
+  linear-gradient(var(--cross),var(--cross)),linear-gradient(var(--cross),var(--cross)),
+  linear-gradient(var(--cross),var(--cross)),linear-gradient(var(--cross),var(--cross));
+  background-size:1px 13px,13px 1px,1px 13px,13px 1px;background-repeat:no-repeat;
+  background-position:16px 18px,10px 24px,calc(100% - 16px) calc(100% - 30px),calc(100% - 10px) calc(100% - 24px)}
+.hero,.contact{background-image:none}
+/* 动的光斑收一收，背景交给上面那层固定的微光 */
+.aurora{opacity:.28}
+html[data-theme="light"] .aurora{opacity:.18}
+/* 噪点：0.02 的极细颗粒 */
+.grain{opacity:.02;mix-blend-mode:normal;background-size:140px 140px}
+html[data-theme="light"] .grain{opacity:.03}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.rv{opacity:1;transform:none;filter:none}.name .w span{transform:none}.line-rv{clip-path:none}}
 </style>
 </head>
