@@ -237,7 +237,7 @@ p.lead,.tagline,.job li,.feat span,.list li,.stat .lbl,.xh-cell p{max-width:62ch
 @media (max-width:640px){.ruler .hide-s{display:none}}
 header.top{top:26px}
 .progress{top:26px}
-/* 霄的家：12 列便当网格 */
+/* 吾乡：12 列便当网格 */
 .xh{display:grid;grid-template-columns:repeat(12,1fr);gap:16px}
 .xh-head{grid-column:1 / -1}
 .xh-cell{border:1px solid var(--card-b);border-radius:16px;padding:20px 22px;background:color-mix(in srgb,var(--bg) 55%,transparent)}
@@ -249,7 +249,7 @@ header.top{top:26px}
 .c7{grid-column:span 7}.c5{grid-column:span 5}
 @media (max-width:860px){.xh{grid-template-columns:1fr}.c7,.c5{grid-column:auto}}
 
-/* 作品：霄的家单独一张大卡，竞赛三张小卡（大小不同，不放在同一排翻页里） */
+/* 作品：吾乡单独一张大卡，竞赛三张小卡（大小不同，不放在同一排翻页里） */
 .xh-card{padding:clamp(22px,3vw,36px)}
 .comp{display:flex;flex-direction:column;gap:10px}
 .comp .tag{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}
@@ -421,7 +421,7 @@ html[data-theme="light"] .xh-cell{background:rgba(247,242,232,.55)}
     <div class="card stat span-3 rv" style="--i:1"><div class="num serif"><span data-count="98.89" data-dec="2">0</span><small>%</small></div><div class="lbl"><span lang="en">Closure rate across 813 incident cases</span><span lang="zh">813 起异常工单的结案率</span></div><div class="src">JD.com</div></div>
     <div class="card stat span-3 rv" style="--i:2"><div class="num serif"><span data-count="98">0</span><small>%</small></div><div class="lbl"><span lang="en">On-time arrival over 60+ purchase orders</span><span lang="zh">60 余笔采购订单的到货及时率</span></div><div class="src">Xinjuxin Trading</div></div>
     <div class="card stat span-3 rv" style="--i:3"><div class="num serif"><span data-count="42">0</span><small>%</small></div><div class="lbl"><span lang="en">Less slow-moving inventory after ABC analysis</span><span lang="zh">ABC 分类后滞销库存占比下降</span></div><div class="src">Xinjuxin Trading</div></div>
-    <div class="card stat span-6 rv" style="--i:4"><div class="num serif"><span data-count="26">0</span><small>k+</small></div><div class="lbl"><span lang="en">Lines of code shipped solo in Xiao-Home — web, backend and Android, 260+ commits</span><span lang="zh">在「霄的家」里独立写下并上线的代码行数——网页、后端、安卓三端，260+ 次提交</span></div><div class="src">AIGC Project</div></div>
+    <div class="card stat span-6 rv" style="--i:4"><div class="num serif"><span data-count="26">0</span><small>k+</small></div><div class="lbl"><span lang="en">Lines of code shipped solo in Wuxiang — web, backend and Android, 260+ commits</span><span lang="zh">在「吾乡」里独立写下并上线的代码行数——网页、后端、安卓三端，260+ 次提交</span></div><div class="src">AIGC Project</div></div>
     <div class="card stat span-6 rv" style="--i:5"><div class="num serif"><span data-count="93.99" data-dec="2">0</span><small>%</small></div><div class="lbl"><span lang="en">Optimisation success rate with hybrid GA–PSO — last-mile nodes 31 → 6, shortest TSP path 31.02</span><span lang="zh">遗传-粒子群混合算法的寻优成功率——末端网点 31 → 6，TSP 最短路径 31.02</span></div><div class="src">Logistics Design · 3rd Prize</div></div>
   </div>
 </section>
@@ -464,12 +464,12 @@ html[data-theme="light"] .xh-cell{background:rgba(247,242,232,.55)}
 <section id="projects">
   <div class="eyebrow rv"><span lang="en">03 — Featured Projects</span><span lang="zh">03 — 代表作品</span></div>
   <h2 class="sec serif rv"><span lang="en">Things I <em>built</em>.</span><span lang="zh">我<em>做出来</em>的东西。</span></h2>
-      <!-- 1 霄的家 -->
+      <!-- 1 吾乡 -->
       <article class="card rv xh-card">
         <div class="xh">
           <div class="xh-head">
             <span class="tag" style="display:inline-block;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);margin-bottom:10px"><span lang="en">AIGC · Full-stack · Solo · 2026 – now</span><span lang="zh">AIGC · 全栈 · 独立开发 · 2026 至今</span></span>
-            <h3 style="font-size:clamp(26px,3.6vw,40px);line-height:1.1;font-weight:700;letter-spacing:-.03em">Xiao-Home</h3>
+            <h3 style="font-size:clamp(26px,3.6vw,40px);line-height:1.1;font-weight:700;letter-spacing:-.03em"><span lang="en">Wuxiang</span><span lang="zh">吾乡</span></h3>
             <p class="lead" style="margin-top:10px;color:var(--fg-2)"><span lang="en">An AI companion app with long-term memory, voice and agent tools. I took it from idea to a product used every day — web app, backend and native Android app — shipped in small daily iterations driven by real user feedback.</span><span lang="zh">一款有长期记忆、会说话、能自己用工具的 AI 陪伴应用。从一个想法做到每天都在用的产品：网页端、后端和安卓原生 App，按真实使用反馈小步快跑、天天迭代。</span></p>
           </div>
           <div class="xh-cell c7"><span class="ix">01 — ARCHITECTURE</span><h4><span lang="en">Full-stack, three platforms</span><span lang="zh">全栈，三端</span></h4><p><span lang="en">React web app, Node.js / Express backend with streaming and scheduled jobs, and a native Android shell for notifications, calls and overlays. Multi-provider LLM access (Claude / Gemini) with prompt caching and low-cost routing for background work.</span><span lang="zh">React 网页、带流式输出和定时任务的 Node.js / Express 后端、安卓原生外壳（通知、来电、悬浮窗）。接入多家大模型（Claude / Gemini），提示词缓存、后台任务走低价模型。</span></p><div class="fig"><span data-count="26">0</span>k+<small lang="en">LINES · 260+ COMMITS</small><small lang="zh">行代码 · 260+ 次提交</small></div></div>
