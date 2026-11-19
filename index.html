@@ -393,7 +393,11 @@ html[data-theme="light"] .xh-cell{background:rgba(247,242,232,.55)}
 .instr .rg{transition:transform 1.6s cubic-bezier(.3,1.4,.4,1),opacity 1s}
 .instr .ro .v{font-size:12.5px;letter-spacing:.04em;fill:var(--fg);font-family:var(--sans);font-weight:600}
 .instr .hint{position:absolute;left:50%;bottom:-6px;transform:translateX(-50%);font-family:var(--mono);font-size:10.5px;letter-spacing:.24em;color:var(--fg-3);white-space:nowrap;transition:opacity .5s}
-.instr.open .hint{opacity:0}
+.instr .hint .h1{display:none}.instr.open .hint .h0{display:none}.instr.open .hint .h1{display:inline}
+.instr .go{pointer-events:none;cursor:pointer}.instr.open .go{pointer-events:auto}
+.instr .go .hit{fill:transparent;stroke:none;transition:fill .3s}
+.instr .go:hover .hit,.instr .go:focus .hit{fill:color-mix(in srgb,var(--accent) 14%,transparent)}
+.instr .go:hover .v{fill:var(--accent)}
 .instr .pulse{animation:pulse 2.4s ease-out infinite;transform-box:fill-box;transform-origin:center}
 @keyframes pulse{0%{opacity:.7;transform:scale(1)}100%{opacity:0;transform:scale(2.6)}}
 @media (max-width:980px){.instr{position:relative;right:auto;top:auto;transform:none;width:min(78vw,340px);margin:44px auto 0}}
@@ -513,9 +517,10 @@ section>.ghost-num{position:absolute;z-index:0}
       <g class="needle"><path d="M0,-98 L5,0 L0,12 L-5,0 Z" fill="var(--accent)"/><path d="M0,12 L3,0 L0,40 L-3,0 Z" fill="var(--fg-3)" opacity=".6"/></g>
       <circle r="5" fill="var(--bg)" stroke="var(--accent)" stroke-width="2"/>
       <circle class="pulse" r="9" fill="none" stroke="var(--accent)" stroke-width="1"/>
-      <g class="ro" style="transition-delay:0.90s"><text x="-150" y="-118" text-anchor="start"><tspan lang="en">NAME</tspan><tspan lang="zh">姓名</tspan></text><text class="v" x="-150" y="-102" text-anchor="start"><tspan lang="en">CELOS CAO</tspan><tspan lang="zh">CELOS CAO</tspan></text></g><g class="ro" style="transition-delay:1.08s"><text x="150" y="-118" text-anchor="end"><tspan lang="en">MAJOR</tspan><tspan lang="zh">专业</tspan></text><text class="v" x="150" y="-102" text-anchor="end"><tspan lang="en">LOGISTICS ENG.</tspan><tspan lang="zh">物流工程</tspan></text></g><g class="ro" style="transition-delay:1.26s"><text x="-150" y="128" text-anchor="start"><tspan lang="en">CLASS</tspan><tspan lang="zh">届别</tspan></text><text class="v" x="-150" y="144" text-anchor="start"><tspan lang="en">2027 · CAFUC</tspan><tspan lang="zh">2027 · 民航飞院</tspan></text></g><g class="ro" style="transition-delay:1.44s"><text x="150" y="128" text-anchor="end"><tspan lang="en">ROLE</tspan><tspan lang="zh">方向</tspan></text><text class="v" x="150" y="144" text-anchor="end"><tspan lang="en">SC × AIGC</tspan><tspan lang="zh">供应链 × AIGC</tspan></text></g>
+      <g class="ro go" data-go="#experience" data-a="-52" style="transition-delay:0.90s"><rect class="hit" x="-154" y="-132" width="120" height="38" rx="4"/><text x="-150" y="-118" text-anchor="start"><tspan lang="en">EXPERIENCE</tspan><tspan lang="zh">经历</tspan></text><text class="v" x="-150" y="-102" text-anchor="start"><tspan lang="en">813 cases →</tspan><tspan lang="zh">813 单 →</tspan></text></g><g class="ro go" data-go="#projects" data-a="52" style="transition-delay:1.08s"><rect class="hit" x="34" y="-132" width="120" height="38" rx="4"/><text x="150" y="-118" text-anchor="end"><tspan lang="en">PROJECTS</tspan><tspan lang="zh">作品</tspan></text><text class="v" x="150" y="-102" text-anchor="end"><tspan lang="en">Wuxiang · 3 platforms →</tspan><tspan lang="zh">吾乡 · 三端 →</tspan></text></g><g class="ro go" data-go="#competitions" data-a="-130" style="transition-delay:1.26s"><rect class="hit" x="-154" y="114" width="120" height="38" rx="4"/><text x="-150" y="128" text-anchor="start"><tspan lang="en">COMPETITIONS</tspan><tspan lang="zh">竞赛</tspan></text><text class="v" x="-150" y="144" text-anchor="start"><tspan lang="en">3 awards →</tspan><tspan lang="zh">3 个奖 →</tspan></text></g><g class="ro go" data-go="#contact" data-a="130" style="transition-delay:1.44s"><rect class="hit" x="34" y="114" width="120" height="38" rx="4"/><text x="150" y="128" text-anchor="end"><tspan lang="en">CONTACT</tspan><tspan lang="zh">联系</tspan></text><text class="v" x="150" y="144" text-anchor="end"><tspan lang="en">Email me →</tspan><tspan lang="zh">发邮件 →</tspan></text></g>
+      
     </svg>
-    <div class="hint"><span lang="en">TAP TO CALIBRATE</span><span lang="zh">点一下 · 校准</span></div>
+    <div class="hint"><span class="h0"><span lang="en">TAP TO CALIBRATE</span><span lang="zh">点一下 · 校准</span></span><span class="h1"><span lang="en">TAP A READING TO JUMP</span><span lang="zh">点一行读数 · 跳过去</span></span></div>
   </div>
   <div class="scroll-cue"><span lang="en">SCROLL</span><span lang="zh">向下</span><i></i></div>
 </section>
@@ -601,7 +606,7 @@ section>.ghost-num{position:absolute;z-index:0}
         </div>
       </article>
 
-  <div class="eyebrow rv" style="margin:56px 0 18px"><span lang="en">Academic competitions</span><span lang="zh">学术竞赛</span></div>
+  <div class="eyebrow rv" id="competitions" style="margin:56px 0 18px;scroll-margin-top:110px"><span lang="en">Academic competitions</span><span lang="zh">学术竞赛</span></div>
   <div class="bento comps">
     <article class="card comp span-4 rv" style="--i:0">
       <span class="tag"><span lang="en">Optimisation · 3rd Prize</span><span lang="zh">优化建模 · 三等奖</span></span>
@@ -784,7 +789,18 @@ section>.ghost-num{position:absolute;z-index:0}
   // 首屏航向仪：点一下指针摆过去、外圈转一格、四周读数亮起来；再点收回
   var ins = document.getElementById('instr');
   if (ins){ function tog(){ ins.classList.toggle('open'); }
-    ins.addEventListener('click', tog);
+    ins.addEventListener('click', function(e){
+      var g = e.target.closest && e.target.closest('.go');
+      if (g && ins.classList.contains('open')){   // 点的是读数：指针转过去指着它，再滚到那一节
+        e.stopPropagation();
+        ins.querySelector('.needle').style.transform = 'rotate(' + g.dataset.a + 'deg)';
+        var dest = document.querySelector(g.dataset.go);
+        setTimeout(function(){ if (dest) dest.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' }); }, reduce ? 0 : 650);
+        return;
+      }
+      ins.querySelector('.needle').style.transform = '';
+      tog();
+    });
     ins.addEventListener('keydown', function(e){ if (e.key === 'Enter' || e.key === ' '){ e.preventDefault(); tog(); } });
     if (!reduce) setTimeout(function(){ if (!ins.dataset.touched) ins.classList.add('open'); }, 2600);   // 第一次自己校准一下，让人知道能点
     ins.addEventListener('pointerdown', function(){ ins.dataset.touched = 1; });
