@@ -453,7 +453,21 @@ section>.ghost-num{position:absolute;z-index:0}
 .seal .sub{font-size:7px;letter-spacing:.3em;fill:var(--fg-3)}
 .seal circle,.seal path{stroke:var(--accent);fill:none}
 
-@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.rv{opacity:1;transform:none;filter:none}.name .w span{transform:none}.line-rv{clip-path:none}.seal{opacity:1;transform:rotate(-8deg)}}
+
+/* 11-19 修：有的手机浏览器不认 SVG 属性里的 var()，颜色全写进 CSS */
+.instr .nd-a{fill:var(--accent)}.instr .nd-b{fill:var(--fg-3);opacity:.6}
+.instr .hub{fill:var(--bg);stroke:var(--accent)}.instr .pulse{fill:none;stroke:var(--accent)}
+/* 手机上「向下」那个提示别和罗盘底下的字叠在一起 */
+@media (max-width:980px){.hero .scroll-cue{position:relative;left:auto;bottom:auto;transform:none;margin:56px auto 0}}
+/* 卡片一张一张渐变出来（11-19 珏说现在是一股脑出来的）：从上往下慢慢显出来，同一排的错开 */
+.card.rv,.xh-cell.rv{opacity:0;transform:translateY(46px) scale(.97);filter:blur(10px);
+  -webkit-mask-image:linear-gradient(180deg,#000 0%,#000 40%,transparent 60%);mask-image:linear-gradient(180deg,#000 0%,#000 40%,transparent 60%);
+  -webkit-mask-size:100% 260%;mask-size:100% 260%;-webkit-mask-position:0 100%;mask-position:0 100%;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;
+  transition:opacity 1.3s var(--ease),transform 1.3s var(--ease),filter 1.3s var(--ease),-webkit-mask-position 1.6s var(--ease),mask-position 1.6s var(--ease);
+  transition-delay:calc(var(--i,0)*220ms)}
+.settled{-webkit-mask-image:none!important;mask-image:none!important}
+.card.rv.in,.xh-cell.rv.in{opacity:1;transform:none;filter:none;-webkit-mask-position:0 0;mask-position:0 0}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.rv{opacity:1;transform:none;filter:none}.name .w span{transform:none}.line-rv{clip-path:none}.seal{opacity:1;transform:rotate(-8deg)}.card.rv,.xh-cell.rv{opacity:1;transform:none;filter:none;-webkit-mask-image:none;mask-image:none}}
 </style>
 </head>
 <body>
@@ -514,9 +528,9 @@ section>.ghost-num{position:absolute;z-index:0}
         <circle class="ln" r="112" stroke-width=".8"/>
       </g></g>
       <g class="ln" stroke-width=".7"><line x1="-104" y1="0" x2="104" y2="0"/><line x1="0" y1="-104" x2="0" y2="104"/><circle r="70" stroke-dasharray="1 4"/></g>
-      <g class="needle"><path d="M0,-98 L5,0 L0,12 L-5,0 Z" fill="var(--accent)"/><path d="M0,12 L3,0 L0,40 L-3,0 Z" fill="var(--fg-3)" opacity=".6"/></g>
-      <circle r="5" fill="var(--bg)" stroke="var(--accent)" stroke-width="2"/>
-      <circle class="pulse" r="9" fill="none" stroke="var(--accent)" stroke-width="1"/>
+      <g class="needle"><path class="nd-a" d="M0,-98 L5,0 L0,12 L-5,0 Z"/><path class="nd-b" d="M0,12 L3,0 L0,40 L-3,0 Z"/></g>
+      <circle class="hub" r="5" stroke-width="2"/>
+      <circle class="pulse" r="9" stroke-width="1"/>
       <g class="ro go" data-go="#experience" data-a="-52" style="transition-delay:0.90s"><rect class="hit" x="-154" y="-132" width="120" height="38" rx="4"/><text class="v" x="-150" y="-110" text-anchor="start"><tspan lang="en">Experience →</tspan><tspan lang="zh">经历 →</tspan></text></g><g class="ro go" data-go="#projects" data-a="52" style="transition-delay:1.08s"><rect class="hit" x="34" y="-132" width="120" height="38" rx="4"/><text class="v" x="150" y="-110" text-anchor="end"><tspan lang="en">AIGC Work →</tspan><tspan lang="zh">AIGC 作品 →</tspan></text></g><g class="ro go" data-go="#competitions" data-a="-130" style="transition-delay:1.26s"><rect class="hit" x="-154" y="114" width="120" height="38" rx="4"/><text class="v" x="-150" y="136" text-anchor="start"><tspan lang="en">Awards →</tspan><tspan lang="zh">奖项 →</tspan></text></g><g class="ro go" data-go="#contact" data-a="130" style="transition-delay:1.44s"><rect class="hit" x="34" y="114" width="120" height="38" rx="4"/><text class="v" x="150" y="136" text-anchor="end"><tspan lang="en">Contact →</tspan><tspan lang="zh">联系 →</tspan></text></g>
       
     </svg>
@@ -548,7 +562,7 @@ section>.ghost-num{position:absolute;z-index:0}
   <h2 class="sec serif rv"><span lang="en">Hands on the <em>supply chain</em>.</span><span lang="zh">亲手摸过的<em>供应链</em>。</span></h2>
   <div class="timeline route" id="route">
     <div class="route-line" aria-hidden="true"><div class="route-fill" id="routeFill"></div><div class="route-plane" id="routePlane"><svg viewBox="0 0 24 24"><path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5z"/></svg></div></div>
-    <article class="card job rv">
+    <article class="card job rv" style="--i:0">
       <div class="when">Jun – Sep 2026<b>JD.com · 京东</b></div>
       <div>
         <h3><span lang="en">Supply Chain Incident Handling Intern</span><span lang="zh">供应链异常处理实习生</span></h3>
@@ -561,7 +575,7 @@ section>.ghost-num{position:absolute;z-index:0}
         <div class="kpis"><span class="kpi"><b>−28%</b><span lang="en">resolution time</span><span lang="zh">处理时长</span></span><span class="kpi"><b>813 / 804</b><span lang="en">handled / closed</span><span lang="zh">经手 / 办结</span></span><span class="kpi"><b>98.89%</b><span lang="en">closure</span><span lang="zh">结案率</span></span><span class="kpi"><b>−15%</b><span lang="en">repeat damage</span><span lang="zh">破损复发</span></span></div>
       </div>
     </article>
-    <article class="card job rv">
+    <article class="card job rv" style="--i:1">
       <div class="when">Jan – Apr 2025<b><span lang="en">Xinjuxin Trading Co., Ltd.</span><span lang="zh">鑫聚鑫商贸有限公司</span></b></div>
       <div>
         <h3><span lang="en">Operations Assistant</span><span lang="zh">运营助理</span></h3>
@@ -591,18 +605,18 @@ section>.ghost-num{position:absolute;z-index:0}
             <h3 style="font-size:clamp(26px,3.6vw,40px);line-height:1.1;font-weight:700;letter-spacing:-.03em"><span lang="en">Wuxiang</span><span lang="zh">吾乡</span></h3>
             <p class="lead" style="margin-top:10px;color:var(--fg-2)"><span lang="en">An AI companion app with long-term memory, voice and agent tools. I took it from idea to a product used every day — web app, backend and native Android app — shipped in small daily iterations driven by real user feedback.</span><span lang="zh">一款有长期记忆、会说话、能自己用工具的 AI 陪伴应用。从一个想法做到每天都在用的产品：网页端、后端和安卓原生 App，按真实使用反馈小步快跑、天天迭代。</span></p>
           </div>
-          <div class="xh-cell c7"><span class="ix">01 — ARCHITECTURE</span><h4><span lang="en">Full-stack, three platforms</span><span lang="zh">全栈，三端</span></h4><p><span lang="en">React web app, Node.js / Express backend with streaming and scheduled jobs, and a native Android shell for notifications, calls and overlays. Multi-provider LLM access (Claude / Gemini) with prompt caching and low-cost routing for background work.</span><span lang="zh">React 网页、带流式输出和定时任务的 Node.js / Express 后端、安卓原生外壳（通知、来电、悬浮窗）。接入多家大模型（Claude / Gemini），提示词缓存、后台任务走低价模型。</span></p><div class="fig"><span data-count="26">0</span>k+<small lang="en">LINES · 260+ COMMITS</small><small lang="zh">行代码 · 260+ 次提交</small></div></div>
-          <div class="xh-cell c5"><span class="ix">03 — AGENTS</span><h4><span lang="en">MCP tool use</span><span lang="zh">MCP 工具调用</span></h4><p><span lang="en">Model Context Protocol clients let the AI act in external services step by step — per-step logs, a live progress view, and resume after a server restart.</span><span lang="zh">用 MCP（模型上下文协议）让 AI 一步步操作外部服务——逐步日志、实时进度，后台重启后能接着做。</span></p></div>
-          <div class="xh-cell c7"><span class="ix">02 — MEMORY</span><h4><span lang="en">Long-term memory with disaster recovery</span><span lang="zh">带容灾的长期记忆</span></h4><p><span lang="en">Layered memory with vector search, emotional valence/arousal weighting and nightly consolidation. After a real data-loss incident I added fail-safe reads (a failed read can never overwrite data) and one-tap restore from version history.</span><span lang="zh">分层记忆 + 向量检索、情绪效价 / 唤醒加权、夜间整理巩固。经历过一次真实的数据丢失后，补上了「读失败绝不覆盖」和从版本历史一键找回。</span></p><div class="fig"><span data-count="1300">0</span>+<small lang="en">MEMORIES KEPT</small><small lang="zh">条记忆</small></div></div>
-          <div class="xh-cell c5"><span class="ix">04 — SENSES</span><h4><span lang="en">Voice, audio & vision</span><span lang="zh">声音、听觉与视觉</span></h4><p><span lang="en">Emotional TTS, on-device audio analysis, 3D binaural audio, image and long-screenshot understanding, and procedural illustrations rendered in a sandboxed worker.</span><span lang="zh">情绪化语音合成、手机端声学分析、双耳 3D 空间音频、图片与长截图理解、在沙盒里运行的程序化插画。</span></p></div>
-          <div class="xh-cell c7" style="background:transparent"><div class="arch">
+          <div class="xh-cell rv c7" style="--i:0"><span class="ix">01 — ARCHITECTURE</span><h4><span lang="en">Full-stack, three platforms</span><span lang="zh">全栈，三端</span></h4><p><span lang="en">React web app, Node.js / Express backend with streaming and scheduled jobs, and a native Android shell for notifications, calls and overlays. Multi-provider LLM access (Claude / Gemini) with prompt caching and low-cost routing for background work.</span><span lang="zh">React 网页、带流式输出和定时任务的 Node.js / Express 后端、安卓原生外壳（通知、来电、悬浮窗）。接入多家大模型（Claude / Gemini），提示词缓存、后台任务走低价模型。</span></p><div class="fig"><span data-count="26">0</span>k+<small lang="en">LINES · 260+ COMMITS</small><small lang="zh">行代码 · 260+ 次提交</small></div></div>
+          <div class="xh-cell rv c5" style="--i:1"><span class="ix">03 — AGENTS</span><h4><span lang="en">MCP tool use</span><span lang="zh">MCP 工具调用</span></h4><p><span lang="en">Model Context Protocol clients let the AI act in external services step by step — per-step logs, a live progress view, and resume after a server restart.</span><span lang="zh">用 MCP（模型上下文协议）让 AI 一步步操作外部服务——逐步日志、实时进度，后台重启后能接着做。</span></p></div>
+          <div class="xh-cell rv c7" style="--i:2"><span class="ix">02 — MEMORY</span><h4><span lang="en">Long-term memory with disaster recovery</span><span lang="zh">带容灾的长期记忆</span></h4><p><span lang="en">Layered memory with vector search, emotional valence/arousal weighting and nightly consolidation. After a real data-loss incident I added fail-safe reads (a failed read can never overwrite data) and one-tap restore from version history.</span><span lang="zh">分层记忆 + 向量检索、情绪效价 / 唤醒加权、夜间整理巩固。经历过一次真实的数据丢失后，补上了「读失败绝不覆盖」和从版本历史一键找回。</span></p><div class="fig"><span data-count="1300">0</span>+<small lang="en">MEMORIES KEPT</small><small lang="zh">条记忆</small></div></div>
+          <div class="xh-cell rv c5" style="--i:3"><span class="ix">04 — SENSES</span><h4><span lang="en">Voice, audio & vision</span><span lang="zh">声音、听觉与视觉</span></h4><p><span lang="en">Emotional TTS, on-device audio analysis, 3D binaural audio, image and long-screenshot understanding, and procedural illustrations rendered in a sandboxed worker.</span><span lang="zh">情绪化语音合成、手机端声学分析、双耳 3D 空间音频、图片与长截图理解、在沙盒里运行的程序化插画。</span></p></div>
+          <div class="xh-cell rv c7" style="--i:4;background:transparent"><div class="arch">
               <div class="row"><div class="node"><b>Client</b><span lang="en">React web + Android (WebView + native)</span><span lang="zh">React 网页 + 安卓（WebView + 原生）</span></div></div>
               <div class="flow"></div>
               <div class="row"><div class="node"><b>API</b><span lang="en">Node.js / Express · streaming · jobs</span><span lang="zh">Node.js / Express · 流式 · 定时任务</span></div><div class="node"><b>Models</b><span lang="en">LLM router · embeddings · vision · TTS</span><span lang="zh">模型路由 · 向量 · 视觉 · 语音</span></div></div>
               <div class="flow"></div>
               <div class="row"><div class="node"><b>Memory</b><span lang="en">Versioned store · snapshots · restore</span><span lang="zh">带版本快照与回滚的存储</span></div><div class="node"><b>Tools</b><span lang="en">MCP clients · web · media</span><span lang="zh">MCP 客户端 · 网页 · 媒体</span></div></div>
           </div></div>
-          <div class="xh-cell c5" style="background:transparent"><div class="chips" style="margin-top:0"><span class="chip">React</span><span class="chip">Vite</span><span class="chip">Node.js</span><span class="chip">Express</span><span class="chip">Android · Java</span><span class="chip">LLM APIs</span><span class="chip">MCP</span><span class="chip">RAG / Embeddings</span><span class="chip">Web Audio</span><span class="chip">Canvas</span><span class="chip">Prompt Engineering</span></div></div>
+          <div class="xh-cell rv c5" style="--i:5;background:transparent"><div class="chips" style="margin-top:0"><span class="chip">React</span><span class="chip">Vite</span><span class="chip">Node.js</span><span class="chip">Express</span><span class="chip">Android · Java</span><span class="chip">LLM APIs</span><span class="chip">MCP</span><span class="chip">RAG / Embeddings</span><span class="chip">Web Audio</span><span class="chip">Canvas</span><span class="chip">Prompt Engineering</span></div></div>
         </div>
       </article>
 
@@ -751,6 +765,7 @@ section>.ghost-num{position:absolute;z-index:0}
   var io = new IntersectionObserver(function(es){ es.forEach(function(en){
     if (!en.isIntersecting) return;
     en.target.classList.add('in');
+    (function(el){ setTimeout(function(){ el.classList.add('settled'); }, 2600 + (parseInt(getComputedStyle(el).getPropertyValue('--i')) || 0) * 220); })(en.target);   // 出完了拿掉遮罩，不然卡片翻面的 3D 会被压平
     en.target.querySelectorAll('[data-count]').forEach(function(c){ if (!c.dataset.done){ c.dataset.done = 1; countUp(c); } });
     io.unobserve(en.target);
   }); }, { threshold: .18, rootMargin: '0px 0px -6% 0px' });
