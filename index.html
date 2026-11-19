@@ -364,7 +364,92 @@ html[data-theme="light"] .xh-cell{background:rgba(247,242,232,.55)}
 .star li{max-width:62ch}
 .cmp{color:var(--fg-2);font-size:14.5px;line-height:1.6}
 @supports (grid-template-rows:subgrid){.comps .comp{grid-row:span 5}}
-@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.rv{opacity:1;transform:none;filter:none}.name .w span{transform:none}.line-rv{clip-path:none}}
+
+/* —— 炫技（2026-11-19，珏要的：照「档案」那种网页加一点会动、能玩的东西） —— */
+/* 首屏：会转的航向仪 */
+.hero{position:relative}
+.instr{position:absolute;right:clamp(0px,2vw,40px);top:50%;width:min(40vw,470px);aspect-ratio:1;transform:translateY(-46%);cursor:pointer;-webkit-tap-highlight-color:transparent;z-index:1}
+.instr svg{width:100%;height:100%;overflow:visible}
+.instr .rg{transform-box:view-box;transform-origin:0 0;transition:transform 1.6s cubic-bezier(.3,1.4,.4,1)}
+.instr .spin-a{animation:spinA 90s linear infinite}
+.instr .spin-b{animation:spinB 140s linear infinite}
+@keyframes spinA{to{transform:rotate(360deg)}}
+@keyframes spinB{to{transform:rotate(-360deg)}}
+.instr .ln{stroke:var(--fg-3);fill:none}
+.instr .ac{stroke:var(--accent);fill:none}
+.instr .tx{fill:var(--fg-3);font-family:var(--mono);font-size:9px;letter-spacing:.12em}
+.instr .tx.hi{fill:var(--accent)}
+.instr .needle{transform-box:view-box;transform-origin:0 0;transform:rotate(-38deg);transition:transform 1.8s cubic-bezier(.25,1.6,.35,1)}
+.instr.open .needle{transform:rotate(312deg)}
+.instr .sweep{stroke-dasharray:0 1200;transition:stroke-dasharray 2.2s var(--ease)}
+.instr.open .sweep{stroke-dasharray:820 1200}
+.instr.open .r1{transform:rotate(30deg)}
+.instr.open .r2{transform:rotate(-45deg)}
+.instr .ro{opacity:0;transition:opacity .7s var(--ease),transform .7s var(--ease);transform:translateY(6px)}
+.instr.open .ro{opacity:1;transform:none}
+.instr .ro text{font-family:var(--mono);font-size:8px;letter-spacing:.16em;fill:var(--fg-3)}
+.instr .ro text{paint-order:stroke;stroke:var(--bg);stroke-width:5px;stroke-linejoin:round}
+.instr.open .r1,.instr.open .r2{opacity:.45}
+.instr .rg{transition:transform 1.6s cubic-bezier(.3,1.4,.4,1),opacity 1s}
+.instr .ro .v{font-size:12.5px;letter-spacing:.04em;fill:var(--fg);font-family:var(--sans);font-weight:600}
+.instr .hint{position:absolute;left:50%;bottom:-6px;transform:translateX(-50%);font-family:var(--mono);font-size:10.5px;letter-spacing:.24em;color:var(--fg-3);white-space:nowrap;transition:opacity .5s}
+.instr.open .hint{opacity:0}
+.instr .pulse{animation:pulse 2.4s ease-out infinite;transform-box:fill-box;transform-origin:center}
+@keyframes pulse{0%{opacity:.7;transform:scale(1)}100%{opacity:0;transform:scale(2.6)}}
+@media (max-width:980px){.instr{position:relative;right:auto;top:auto;transform:none;width:min(78vw,340px);margin:44px auto 0}}
+@media (min-width:981px){.hero>*:not(.instr):not(.scroll-cue){max-width:min(640px,54vw)}}
+
+/* 跑马灯 */
+.marquee{position:relative;overflow:hidden;border-top:1px solid var(--card-b);border-bottom:1px solid var(--card-b);padding:14px 0;margin:8px 0;
+  font-family:var(--mono);font-size:12px;letter-spacing:.32em;text-transform:uppercase;color:var(--fg-3);background:color-mix(in srgb,var(--bg) 70%,transparent);
+  -webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
+.marquee.tilt{transform:rotate(-1.6deg) scale(1.03)}
+.marquee .trk{display:flex;width:max-content;animation:mq 46s linear infinite}
+.marquee.rev .trk{animation-direction:reverse;animation-duration:60s}
+.marquee span{padding-right:2.2em;white-space:nowrap}
+.marquee b{color:var(--accent);font-weight:400;padding:0 1.1em}
+@keyframes mq{to{transform:translateX(-50%)}}
+
+/* 每节后面的大号空心编号 */
+.ghost-num{position:absolute;right:clamp(8px,4vw,56px);top:clamp(40px,8vh,96px);font-family:var(--mono);font-weight:700;font-size:clamp(110px,20vw,240px);line-height:1;
+  color:transparent;-webkit-text-stroke:1px color-mix(in srgb,var(--accent) 38%,transparent);pointer-events:none;z-index:0;letter-spacing:-.06em;will-change:transform}
+section>*{position:relative;z-index:1}
+section>.ghost-num{position:absolute;z-index:0}
+
+/* 亮点卡：点一下翻过来，背面是怎么做到的 */
+.stat.flipc{cursor:pointer;perspective:1200px;-webkit-tap-highlight-color:transparent}
+.flip{display:grid;height:100%;transform-style:preserve-3d;transition:transform .9s cubic-bezier(.3,1.3,.4,1)}
+.flip>.face{grid-area:1/1;backface-visibility:hidden;-webkit-backface-visibility:hidden;display:flex;flex-direction:column}
+.flip>.back{transform:rotateY(180deg);justify-content:center}
+.flipped .flip{transform:rotateY(180deg)}
+.flip .back p{color:var(--fg);font-size:14.5px;line-height:1.65}
+.flip .back .k{font-family:var(--mono);font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);margin-bottom:10px}
+.stat.flipc .face{padding-bottom:22px}
+.flip-hint{position:absolute;right:20px;bottom:14px;font-family:var(--mono);font-size:10px;letter-spacing:.16em;color:var(--fg-3);opacity:.8;transition:color .4s}
+.stat.flipc:hover .flip-hint{color:var(--accent)}
+
+/* 经历：一条航线，小飞机跟着往下飞 */
+.timeline.route{padding-left:44px}
+.route-line{position:absolute;left:14px;top:8px;bottom:8px;width:2px;background:repeating-linear-gradient(var(--card-b) 0 6px,transparent 6px 12px)}
+.route-fill{position:absolute;left:0;top:0;width:2px;height:0;background:linear-gradient(var(--accent-2),var(--accent));box-shadow:0 0 12px var(--accent)}
+.route-plane{position:absolute;left:-10px;top:0;width:22px;height:22px;margin-top:-11px;color:var(--accent);filter:drop-shadow(0 0 6px var(--accent));transition:transform .3s}
+.route-plane svg{width:100%;height:100%;fill:currentColor;transform:rotate(180deg)}
+.route-node{position:absolute;left:-5px;width:12px;height:12px;border-radius:50%;border:2px solid var(--card-b);background:var(--bg);transition:border-color .5s,box-shadow .5s}
+.route-node.hit{border-color:var(--accent);box-shadow:0 0 0 5px color-mix(in srgb,var(--accent) 22%,transparent)}
+@media (max-width:640px){.timeline.route{padding-left:30px}.route-line{left:6px}}
+
+/* 联系：认证印章 */
+.seal{width:150px;height:150px;margin:0 auto 6px;opacity:0;transform:scale(2.2) rotate(-24deg)}
+.seal.in{animation:stamp .7s cubic-bezier(.2,1.5,.4,1) forwards}
+@keyframes stamp{to{opacity:1;transform:scale(1) rotate(-8deg)}}
+.seal svg{width:100%;height:100%;overflow:visible}
+.seal .ring{transform-box:view-box;transform-origin:0 0;animation:spinA 26s linear infinite}
+.seal text{font-family:var(--mono);font-size:10.6px;letter-spacing:.28em;fill:var(--accent)}
+.seal .mono{font-family:var(--sans);font-weight:800;font-size:34px;letter-spacing:-.04em;fill:var(--accent)}
+.seal .sub{font-size:7px;letter-spacing:.3em;fill:var(--fg-3)}
+.seal circle,.seal path{stroke:var(--accent);fill:none}
+
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.rv{opacity:1;transform:none;filter:none}.name .w span{transform:none}.line-rv{clip-path:none}.seal{opacity:1;transform:rotate(-8deg)}}
 </style>
 </head>
 <body>
@@ -409,28 +494,55 @@ html[data-theme="light"] .xh-cell{background:rgba(247,242,232,.55)}
     <a class="btn" href="https://www.linkedin.com/in/celos-cao" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M8 10v7M8 7v.01M12 17v-4a2 2 0 0 1 4 0v4M12 10v7"/></svg>LinkedIn</a>
     <a class="btn" href="https://github.com/jue26323-tech" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path d="M9 19c-4 1.5-4-2-6-2m12 4v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 0 0-1.3-3.2 4.2 4.2 0 0 0-.1-3.2s-1.1-.3-3.5 1.3a12 12 0 0 0-6.2 0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2 0 0 0-.1 3.2A4.6 4.6 0 0 0 4 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/></svg>GitHub</a>
   </div>
+
+  <div class="instr" id="instr" role="button" tabindex="0" aria-label="Open profile dial">
+    <svg viewBox="-200 -200 400 400" aria-hidden="true">
+      <defs><path id="ringPath" d="M0,-128 A128,128 0 1,1 -0.1,-128"/></defs>
+      <g class="rg r1"><g class="spin-a">
+        <circle class="ln" r="190" stroke-width="1"/>
+        <g class="ln" stroke-width="1"><line x1="0" y1="-188" x2="0" y2="-174" transform="rotate(0)"/><line x1="0" y1="-188" x2="0" y2="-184" transform="rotate(5)"/><line x1="0" y1="-188" x2="0" y2="-180" transform="rotate(10)"/><line x1="0" y1="-188" x2="0" y2="-184" transform="rotate(15)"/><line x1="0" y1="-188" x2="0" y2="-180" transform="rotate(20)"/><line x1="0" y1="-188" x2="0" y2="-184" transform="rotate(25)"/><line x1="0" y1="-188" x2="0" y2="-174" transform="rotate(30)"/><line x1="0" y1="-188" x2="0" y2="-184" transform="rotate(35)"/><line x1="0" y1="-188" x2="0" y2="-180" transform="rotate(40)"/><line x1="0" y1="-188" x2="0" y2="-184" transform="rotate(45)"/><line x1="0" y1="-188" x2="0" y2="-180" transform="rotate(50)"/><line x1="0" y1="-188" x2="0" y2="-184" transform="rotate(55)"/><line x1="0" y1="-188" x2="0" y2="-174" transform="rotate(60)"/><line x1="0" y1="-188" x2="0" y2="-184" transform="rotate(65)"/><line x1="0" y1="-188" x2="0" y2="-180" transform="rotate(70)"/><line x1="0" y1="-188" x2="0" y2="-184" transform="rotate(75)"/><line x1="0" y1="-188" x2="0" y2="-180" transform="rotate(80)"/><line x1="0" y1="-188" x2="0" y2="-184" transform="rotate(85)"/><line x1="0" y1="-188" x2="0" y2="-174" transform="rotate(90)"/><line x1="0" y1="-188" x2="0" y2="-184" transform="rotate(95)"/><line x1="0" y1="-188" x2="0" y2="-180" transform="rotate(100)"/><line x1="0" y1="-188" x2="0" y2="-184" transform="rotate(105)"/><line x1="0" y1="-188" x2="0" y2="-180" transform="rotate(110)"/><line x1="0" y1="-188" x2="0" y2="-184" transform="rotate(115)"/><line x1="0" y1="-188" x2="0" y2="-174" transform="rotate(120)"/><line x1="0" y1="-188" x2="0" y2="-184" transform="rotate(125)"/><line x1="0" y1="-188" x2="0" y2="-180" transform="rotate(130)"/><line x1="0" y1="-188" x2="0" y2="-184" transform="rotate(135)"/><line x1="0" y1="-188" x2="0" y2="-180" transform="rotate(140)"/><line x1="0" y1="-188" x2="0" y2="-184" transform="rotate(145)"/><line x1="0" y1="-188" x2="0" y2="-174" transform="rotate(150)"/><line x1="0" y1="-188" x2="0" y2="-184" transform="rotate(155)"/><line x1="0" y1="-188" x2="0" y2="-180" transform="rotate(160)"/><line x1="0" y1="-188" x2="0" y2="-184" transform="rotate(165)"/><line x1="0" y1="-188" x2="0" y2="-180" transform="rotate(170)"/><line x1="0" y1="-188" x2="0" y2="-184" transform="rotate(175)"/><line x1="0" y1="-188" x2="0" y2="-174" transform="rotate(180)"/><line x1="0" y1="-188" x2="0" y2="-184" transform="rotate(185)"/><line x1="0" y1="-188" x2="0" y2="-180" transform="rotate(190)"/><line x1="0" y1="-188" x2="0" y2="-184" transform="rotate(195)"/><line x1="0" y1="-188" x2="0" y2="-180" transform="rotate(200)"/><line x1="0" y1="-188" x2="0" y2="-184" transform="rotate(205)"/><line x1="0" y1="-188" x2="0" y2="-174" transform="rotate(210)"/><line x1="0" y1="-188" x2="0" y2="-184" transform="rotate(215)"/><line x1="0" y1="-188" x2="0" y2="-180" transform="rotate(220)"/><line x1="0" y1="-188" x2="0" y2="-184" transform="rotate(225)"/><line x1="0" y1="-188" x2="0" y2="-180" transform="rotate(230)"/><line x1="0" y1="-188" x2="0" y2="-184" transform="rotate(235)"/><line x1="0" y1="-188" x2="0" y2="-174" transform="rotate(240)"/><line x1="0" y1="-188" x2="0" y2="-184" transform="rotate(245)"/><line x1="0" y1="-188" x2="0" y2="-180" transform="rotate(250)"/><line x1="0" y1="-188" x2="0" y2="-184" transform="rotate(255)"/><line x1="0" y1="-188" x2="0" y2="-180" transform="rotate(260)"/><line x1="0" y1="-188" x2="0" y2="-184" transform="rotate(265)"/><line x1="0" y1="-188" x2="0" y2="-174" transform="rotate(270)"/><line x1="0" y1="-188" x2="0" y2="-184" transform="rotate(275)"/><line x1="0" y1="-188" x2="0" y2="-180" transform="rotate(280)"/><line x1="0" y1="-188" x2="0" y2="-184" transform="rotate(285)"/><line x1="0" y1="-188" x2="0" y2="-180" transform="rotate(290)"/><line x1="0" y1="-188" x2="0" y2="-184" transform="rotate(295)"/><line x1="0" y1="-188" x2="0" y2="-174" transform="rotate(300)"/><line x1="0" y1="-188" x2="0" y2="-184" transform="rotate(305)"/><line x1="0" y1="-188" x2="0" y2="-180" transform="rotate(310)"/><line x1="0" y1="-188" x2="0" y2="-184" transform="rotate(315)"/><line x1="0" y1="-188" x2="0" y2="-180" transform="rotate(320)"/><line x1="0" y1="-188" x2="0" y2="-184" transform="rotate(325)"/><line x1="0" y1="-188" x2="0" y2="-174" transform="rotate(330)"/><line x1="0" y1="-188" x2="0" y2="-184" transform="rotate(335)"/><line x1="0" y1="-188" x2="0" y2="-180" transform="rotate(340)"/><line x1="0" y1="-188" x2="0" y2="-184" transform="rotate(345)"/><line x1="0" y1="-188" x2="0" y2="-180" transform="rotate(350)"/><line x1="0" y1="-188" x2="0" y2="-184" transform="rotate(355)"/></g>
+        <text class="tx hi" x="0" y="-160" text-anchor="middle" transform="rotate(0)">N</text><text class="tx" x="0" y="-160" text-anchor="middle" transform="rotate(30)">03</text><text class="tx" x="0" y="-160" text-anchor="middle" transform="rotate(60)">06</text><text class="tx hi" x="0" y="-160" text-anchor="middle" transform="rotate(90)">E</text><text class="tx" x="0" y="-160" text-anchor="middle" transform="rotate(120)">12</text><text class="tx" x="0" y="-160" text-anchor="middle" transform="rotate(150)">15</text><text class="tx hi" x="0" y="-160" text-anchor="middle" transform="rotate(180)">S</text><text class="tx" x="0" y="-160" text-anchor="middle" transform="rotate(210)">21</text><text class="tx" x="0" y="-160" text-anchor="middle" transform="rotate(240)">24</text><text class="tx hi" x="0" y="-160" text-anchor="middle" transform="rotate(270)">W</text><text class="tx" x="0" y="-160" text-anchor="middle" transform="rotate(300)">30</text><text class="tx" x="0" y="-160" text-anchor="middle" transform="rotate(330)">33</text>
+      </g></g>
+      <circle class="ac sweep" r="176" stroke-width="2" transform="rotate(-90)"/>
+      <g class="rg r2"><g class="spin-b">
+        <circle class="ln" r="142" stroke-width=".8" stroke-dasharray="2 6"/>
+        <text class="tx" font-size="9.5"><textPath href="#ringPath" startOffset="0">SUPPLY CHAIN ✦ AIGC ✦ LOGISTICS ENGINEERING ✦ CAFUC ✦ CLASS OF 2027 ✦ OPEN FOR REMOTE ✦ </textPath></text>
+        <circle class="ln" r="112" stroke-width=".8"/>
+      </g></g>
+      <g class="ln" stroke-width=".7"><line x1="-104" y1="0" x2="104" y2="0"/><line x1="0" y1="-104" x2="0" y2="104"/><circle r="70" stroke-dasharray="1 4"/></g>
+      <g class="needle"><path d="M0,-98 L5,0 L0,12 L-5,0 Z" fill="var(--accent)"/><path d="M0,12 L3,0 L0,40 L-3,0 Z" fill="var(--fg-3)" opacity=".6"/></g>
+      <circle r="5" fill="var(--bg)" stroke="var(--accent)" stroke-width="2"/>
+      <circle class="pulse" r="9" fill="none" stroke="var(--accent)" stroke-width="1"/>
+      <g class="ro" style="transition-delay:0.90s"><text x="-150" y="-118" text-anchor="start"><tspan lang="en">NAME</tspan><tspan lang="zh">姓名</tspan></text><text class="v" x="-150" y="-102" text-anchor="start"><tspan lang="en">CELOS CAO</tspan><tspan lang="zh">CELOS CAO</tspan></text></g><g class="ro" style="transition-delay:1.08s"><text x="150" y="-118" text-anchor="end"><tspan lang="en">MAJOR</tspan><tspan lang="zh">专业</tspan></text><text class="v" x="150" y="-102" text-anchor="end"><tspan lang="en">LOGISTICS ENG.</tspan><tspan lang="zh">物流工程</tspan></text></g><g class="ro" style="transition-delay:1.26s"><text x="-150" y="128" text-anchor="start"><tspan lang="en">CLASS</tspan><tspan lang="zh">届别</tspan></text><text class="v" x="-150" y="144" text-anchor="start"><tspan lang="en">2027 · CAFUC</tspan><tspan lang="zh">2027 · 民航飞院</tspan></text></g><g class="ro" style="transition-delay:1.44s"><text x="150" y="128" text-anchor="end"><tspan lang="en">ROLE</tspan><tspan lang="zh">方向</tspan></text><text class="v" x="150" y="144" text-anchor="end"><tspan lang="en">SC × AIGC</tspan><tspan lang="zh">供应链 × AIGC</tspan></text></g>
+    </svg>
+    <div class="hint"><span lang="en">TAP TO CALIBRATE</span><span lang="zh">点一下 · 校准</span></div>
+  </div>
   <div class="scroll-cue"><span lang="en">SCROLL</span><span lang="zh">向下</span><i></i></div>
 </section>
 
+<div class="marquee tilt" aria-hidden="true"><div class="trk"><span>Celos Cao<b>✦</b></span><span>Supply Chain<b>✦</b></span><span>AIGC Builder<b>✦</b></span><span>Logistics Engineering<b>✦</b></span><span>CAFUC · 2027<b>✦</b></span><span>Open for remote<b>✦</b></span><span>UTC+8<b>✦</b></span><span>Celos Cao<b>✦</b></span><span>Supply Chain<b>✦</b></span><span>AIGC Builder<b>✦</b></span><span>Logistics Engineering<b>✦</b></span><span>CAFUC · 2027<b>✦</b></span><span>Open for remote<b>✦</b></span><span>UTC+8<b>✦</b></span></div></div>
 <!-- 亮点数字 -->
 <section id="impact">
+  <span class="ghost-num" aria-hidden="true">01</span>
   <div class="eyebrow rv"><span lang="en">01 — Impact</span><span lang="zh">01 — 亮点</span></div>
   <h2 class="sec serif rv"><span lang="en">Numbers I <em>moved</em>.</span><span lang="zh">我推动过的<em>数字</em>。</span></h2>
   <div class="bento">
-    <div class="card stat span-3 rv" style="--i:0"><div class="num serif"><span data-count="28">0</span><small>%</small></div><div class="lbl"><span lang="en">Faster anomaly resolution (4.3 → 3.1 days)</span><span lang="zh">异常平均处理时长缩短（4.3 → 3.1 天）</span></div><div class="src">JD.com</div></div>
-    <div class="card stat span-3 rv" style="--i:1"><div class="num serif"><span data-count="98.89" data-dec="2">0</span><small>%</small></div><div class="lbl"><span lang="en">Closure rate across 813 incident cases</span><span lang="zh">813 起异常工单的结案率</span></div><div class="src">JD.com</div></div>
-    <div class="card stat span-3 rv" style="--i:2"><div class="num serif"><span data-count="98">0</span><small>%</small></div><div class="lbl"><span lang="en">On-time arrival over 60+ purchase orders</span><span lang="zh">60 余笔采购订单的到货及时率</span></div><div class="src">Xinjuxin Trading</div></div>
-    <div class="card stat span-3 rv" style="--i:3"><div class="num serif"><span data-count="42">0</span><small>%</small></div><div class="lbl"><span lang="en">Less slow-moving inventory after ABC analysis</span><span lang="zh">ABC 分类后滞销库存占比下降</span></div><div class="src">Xinjuxin Trading</div></div>
-    <div class="card stat span-6 rv" style="--i:4"><div class="num serif"><span data-count="26">0</span><small>k+</small></div><div class="lbl"><span lang="en">Lines of code shipped solo in Wuxiang — web, backend and Android, 260+ commits</span><span lang="zh">在「吾乡」里独立写下并上线的代码行数——网页、后端、安卓三端，260+ 次提交</span></div><div class="src">AIGC Project</div></div>
-    <div class="card stat span-6 rv" style="--i:5"><div class="num serif"><span data-count="93.99" data-dec="2">0</span><small>%</small></div><div class="lbl"><span lang="en">Optimisation success rate with hybrid GA–PSO — last-mile nodes 31 → 6, shortest TSP path 31.02</span><span lang="zh">遗传-粒子群混合算法的寻优成功率——末端网点 31 → 6，TSP 最短路径 31.02</span></div><div class="src">Logistics Design · 3rd Prize</div></div>
+    <div class="card stat flipc span-3 rv" style="--i:0" role="button" tabindex="0"><div class="flip"><div class="face front"><div class="num serif"><span data-count="28">0</span><small>%</small></div><div class="lbl"><span lang="en">Faster anomaly resolution (4.3 → 3.1 days)</span><span lang="zh">异常平均处理时长缩短（4.3 → 3.1 天）</span></div><div class="src">JD.com</div></div><div class="face back"><div class="k"><span lang="en">How</span><span lang="zh">怎么做到的</span></div><p><span lang="en">Closed the loop on every exception with warehousing, customer service and QA — weekly root-cause reports and a department dashboard.</span><span lang="zh">联动仓配、客服、质检逐单闭环；每周出根因报告，搭了部门的异常看板。</span></p></div></div><span class="flip-hint">↻ <span lang="en">FLIP</span><span lang="zh">翻面</span></span></div>
+    <div class="card stat flipc span-3 rv" style="--i:1" role="button" tabindex="0"><div class="flip"><div class="face front"><div class="num serif"><span data-count="98.89" data-dec="2">0</span><small>%</small></div><div class="lbl"><span lang="en">Closure rate across 813 incident cases</span><span lang="zh">813 起异常工单的结案率</span></div><div class="src">JD.com</div></div><div class="face back"><div class="k"><span lang="en">How</span><span lang="zh">怎么做到的</span></div><p><span lang="en">813 cases handled, 804 closed — full SOPs for transport damage and mis-shipments, claims or reissues coordinated end to end.</span><span lang="zh">经手 813 起、办结 804 起——按运输破损、错发 SOP 全流程处理，协调理赔或补发。</span></p></div></div><span class="flip-hint">↻ <span lang="en">FLIP</span><span lang="zh">翻面</span></span></div>
+    <div class="card stat flipc span-3 rv" style="--i:2" role="button" tabindex="0"><div class="flip"><div class="face front"><div class="num serif"><span data-count="98">0</span><small>%</small></div><div class="lbl"><span lang="en">On-time arrival over 60+ purchase orders</span><span lang="zh">60 余笔采购订单的到货及时率</span></div><div class="src">Xinjuxin Trading</div></div><div class="face back"><div class="k"><span lang="en">How</span><span lang="zh">怎么做到的</span></div><p><span lang="en">Ran inquiry, price comparison and ordering directly with upstream suppliers across 60+ purchase orders.</span><span lang="zh">直接对接多家上游供应商，60 余笔采购从询价、比价到下单全程跟进。</span></p></div></div><span class="flip-hint">↻ <span lang="en">FLIP</span><span lang="zh">翻面</span></span></div>
+    <div class="card stat flipc span-3 rv" style="--i:3" role="button" tabindex="0"><div class="flip"><div class="face front"><div class="num serif"><span data-count="42">0</span><small>%</small></div><div class="lbl"><span lang="en">Less slow-moving inventory after ABC analysis</span><span lang="zh">ABC 分类后滞销库存占比下降</span></div><div class="src">Xinjuxin Trading</div></div><div class="face back"><div class="k"><span lang="en">How</span><span lang="zh">怎么做到的</span></div><p><span lang="en">ABC analysis on the purchase–sales–inventory ledger flagged slow movers; turnover 32 → 24 days, shrinkage 5.6% → 2.9%.</span><span lang="zh">在进销存台账上做 ABC 分类找出滞销品；周转 32 → 24 天，损耗 5.6% → 2.9%。</span></p></div></div><span class="flip-hint">↻ <span lang="en">FLIP</span><span lang="zh">翻面</span></span></div>
+    <div class="card stat flipc span-6 rv" style="--i:4" role="button" tabindex="0"><div class="flip"><div class="face front"><div class="num serif"><span data-count="26">0</span><small>k+</small></div><div class="lbl"><span lang="en">Lines of code shipped solo in Wuxiang — web, backend and Android, 260+ commits</span><span lang="zh">在「吾乡」里独立写下并上线的代码行数——网页、后端、安卓三端，260+ 次提交</span></div><div class="src">AIGC Project</div></div><div class="face back"><div class="k"><span lang="en">How</span><span lang="zh">怎么做到的</span></div><p><span lang="en">React web app, Node.js backend and a native Android shell — designed, built and run solo, iterated daily from real use.</span><span lang="zh">React 网页、Node.js 后端、安卓原生外壳——一个人设计、开发、上线运营，按每天的真实使用来迭代。</span></p></div></div><span class="flip-hint">↻ <span lang="en">FLIP</span><span lang="zh">翻面</span></span></div>
+    <div class="card stat flipc span-6 rv" style="--i:5" role="button" tabindex="0"><div class="flip"><div class="face front"><div class="num serif"><span data-count="93.99" data-dec="2">0</span><small>%</small></div><div class="lbl"><span lang="en">Optimisation success rate with hybrid GA–PSO — last-mile nodes 31 → 6, shortest TSP path 31.02</span><span lang="zh">遗传-粒子群混合算法的寻优成功率——末端网点 31 → 6，TSP 最短路径 31.02</span></div><div class="src">Logistics Design · 3rd Prize</div></div><div class="face back"><div class="k"><span lang="en">How</span><span lang="zh">怎么做到的</span></div><p><span lang="en">Three integrated models — siting, routing, autonomous delivery — on field-collected data, solved with a hybrid GA–PSO.</span><span lang="zh">选址、路径、无人配送三个模型联动，用实地采集的数据，以遗传-粒子群混合算法求解。</span></p></div></div><span class="flip-hint">↻ <span lang="en">FLIP</span><span lang="zh">翻面</span></span></div>
   </div>
 </section>
 
 <!-- 经历 -->
 <section id="experience">
+  <span class="ghost-num" aria-hidden="true">02</span>
   <div class="eyebrow rv"><span lang="en">02 — Experience</span><span lang="zh">02 — 经历</span></div>
   <h2 class="sec serif rv"><span lang="en">Hands on the <em>supply chain</em>.</span><span lang="zh">亲手摸过的<em>供应链</em>。</span></h2>
-  <div class="timeline">
+  <div class="timeline route" id="route">
+    <div class="route-line" aria-hidden="true"><div class="route-fill" id="routeFill"></div><div class="route-plane" id="routePlane"><svg viewBox="0 0 24 24"><path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5z"/></svg></div></div>
     <article class="card job rv">
       <div class="when">Jun – Sep 2026<b>JD.com · 京东</b></div>
       <div>
@@ -460,8 +572,10 @@ html[data-theme="light"] .xh-cell{background:rgba(247,242,232,.55)}
   </div>
 </section>
 
+<div class="marquee rev" aria-hidden="true"><div class="trk"><span>813 cases handled<b>✦</b></span><span>98.89% closure<b>✦</b></span><span>−28% resolution time<b>✦</b></span><span>60+ purchase orders<b>✦</b></span><span>26k+ lines shipped<b>✦</b></span><span>3 platforms · solo<b>✦</b></span><span>813 cases handled<b>✦</b></span><span>98.89% closure<b>✦</b></span><span>−28% resolution time<b>✦</b></span><span>60+ purchase orders<b>✦</b></span><span>26k+ lines shipped<b>✦</b></span><span>3 platforms · solo<b>✦</b></span></div></div>
 <!-- 作品 -->
 <section id="projects">
+  <span class="ghost-num" aria-hidden="true">03</span>
   <div class="eyebrow rv"><span lang="en">03 — Featured Projects</span><span lang="zh">03 — 代表作品</span></div>
   <h2 class="sec serif rv"><span lang="en">Things I <em>built</em>.</span><span lang="zh">我<em>做出来</em>的东西。</span></h2>
       <!-- 1 吾乡 -->
@@ -515,6 +629,7 @@ html[data-theme="light"] .xh-cell{background:rgba(247,242,232,.55)}
 
 <!-- 能力 -->
 <section id="skills">
+  <span class="ghost-num" aria-hidden="true">04</span>
   <div class="eyebrow rv"><span lang="en">04 — Skills & Education</span><span lang="zh">04 — 能力与教育</span></div>
   <h2 class="sec serif rv"><span lang="en">Operations mind, <em>builder</em> hands.</span><span lang="zh">运营的脑子，<em>开发者</em>的手。</span></h2>
   <div class="bento">
@@ -568,9 +683,16 @@ html[data-theme="light"] .xh-cell{background:rgba(247,242,232,.55)}
   </div>
 </section>
 
+<div class="marquee" aria-hidden="true"><div class="trk"><span>Let’s build something<b>✦</b></span><span>一起做点什么吧<b>✦</b></span><span>Supply Chain × AIGC<b>✦</b></span><span>Celos Cao<b>✦</b></span><span>Let’s build something<b>✦</b></span><span>一起做点什么吧<b>✦</b></span><span>Supply Chain × AIGC<b>✦</b></span><span>Celos Cao<b>✦</b></span></div></div>
 <!-- 联系 -->
 <section class="contact" id="contact">
   <div class="eyebrow rv" style="justify-content:center"><span lang="en">05 — Contact</span><span lang="zh">05 — 联系</span></div>
+  <div class="seal" id="seal" aria-hidden="true"><svg viewBox="-80 -80 160 160">
+    <defs><path id="sealPath" d="M0,-62 A62,62 0 1,1 -0.1,-62"/></defs>
+    <circle r="76" stroke-width="1.4"/><circle r="70" stroke-width=".6"/><circle r="46" stroke-width=".8" stroke-dasharray="2 3"/>
+    <g class="ring"><text><textPath href="#sealPath">CELOS CAO ✦ VERIFIED ✦ SUPPLY CHAIN × AIGC ✦ 2026 ✦ </textPath></text></g>
+    <text class="mono" x="0" y="8" text-anchor="middle">CC</text><text class="sub" x="0" y="26" text-anchor="middle">PORTFOLIO</text>
+  </svg></div>
   <p class="big serif rv" style="margin-top:22px"><span lang="en">Let's build <em>something</em>.</span><span lang="zh">一起做点<em>什么</em>吧。</span></p>
   <a class="mail rv" href="mailto:Caoyx912@outlook.com">Caoyx912@outlook.com</a>
   <div class="rv" style="margin-top:12px"><a class="phone-btn" href="https://www.linkedin.com/in/celos-cao" target="_blank" rel="noopener">linkedin.com/in/celos-cao</a></div>
@@ -657,6 +779,49 @@ html[data-theme="light"] .xh-cell{background:rgba(247,242,232,.55)}
     addEventListener('mousemove', function(e){ cur.style.left = e.clientX + 'px'; cur.style.top = e.clientY + 'px'; });
     document.querySelectorAll('a,button').forEach(function(el){ el.addEventListener('mouseenter', function(){ cur.classList.add('big'); }); el.addEventListener('mouseleave', function(){ cur.classList.remove('big'); }); });
   }
+
+  // —— 炫技（2026-11-19）——
+  // 首屏航向仪：点一下指针摆过去、外圈转一格、四周读数亮起来；再点收回
+  var ins = document.getElementById('instr');
+  if (ins){ function tog(){ ins.classList.toggle('open'); }
+    ins.addEventListener('click', tog);
+    ins.addEventListener('keydown', function(e){ if (e.key === 'Enter' || e.key === ' '){ e.preventDefault(); tog(); } });
+    if (!reduce) setTimeout(function(){ if (!ins.dataset.touched) ins.classList.add('open'); }, 2600);   // 第一次自己校准一下，让人知道能点
+    ins.addEventListener('pointerdown', function(){ ins.dataset.touched = 1; });
+  }
+  // 亮点卡翻面
+  document.querySelectorAll('.stat.flipc').forEach(function(c){
+    function f(){ c.classList.toggle('flipped'); }
+    c.addEventListener('click', f);
+    c.addEventListener('keydown', function(e){ if (e.key === 'Enter' || e.key === ' '){ e.preventDefault(); f(); } });
+  });
+  // 印章：滚到联系那一节「盖」下去
+  var seal = document.getElementById('seal');
+  if (seal){ var so = new IntersectionObserver(function(es){ es.forEach(function(en){ if (en.isIntersecting){ seal.classList.add('in'); so.disconnect(); } }); }, { threshold: .6 }); so.observe(seal); }
+  // 小标题解码：滚到时字母先乱跳，再落成原文
+  var GLY = '█▓▒░<>/\\|=+*#%01';
+  function decode(el){
+    var spans = el.querySelectorAll('[lang]'); var targets = spans.length ? Array.prototype.filter.call(spans, function(s){ return s.offsetParent !== null; }) : [el];
+    targets.forEach(function(s){ var fin = s.textContent, n = 0, total = 18;
+      var iv = setInterval(function(){ n++; s.textContent = fin.split('').map(function(ch, i){ return ch === ' ' || i < (n / total) * fin.length ? ch : GLY[Math.random() * GLY.length | 0]; }).join(''); if (n >= total){ clearInterval(iv); s.textContent = fin; } }, 40);
+    });
+  }
+  if (!reduce){ var dio = new IntersectionObserver(function(es){ es.forEach(function(en){ if (en.isIntersecting){ decode(en.target); dio.unobserve(en.target); } }); }, { threshold: 1 });
+    document.querySelectorAll('section .eyebrow').forEach(function(el){ dio.observe(el); }); }
+  // 大号编号视差 + 航线上的小飞机
+  var ghosts = document.querySelectorAll('.ghost-num'), route = document.getElementById('route'), fill = document.getElementById('routeFill'), plane = document.getElementById('routePlane');
+  var nodes = [];
+  if (route){ route.querySelectorAll('.job').forEach(function(j){ var d = document.createElement('div'); d.className = 'route-node'; route.querySelector('.route-line').appendChild(d); nodes.push({ el: d, job: j }); }); }
+  function fx(){
+    if (!reduce) ghosts.forEach(function(g){ var r = g.parentNode.getBoundingClientRect(); g.style.transform = 'translateY(' + (r.top * -0.18).toFixed(1) + 'px)'; });
+    if (route){
+      var line = route.querySelector('.route-line'), lr = line.getBoundingClientRect(), h = lr.height;
+      var p = Math.max(0, Math.min(1, (innerHeight * .55 - lr.top) / h));
+      fill.style.height = (p * h) + 'px'; plane.style.top = (p * h) + 'px';
+      nodes.forEach(function(n){ var y = n.job.getBoundingClientRect().top - lr.top + 22; n.el.style.top = (y - 6) + 'px'; n.el.classList.toggle('hit', p * h >= y - 4); });
+    }
+  }
+  addEventListener('scroll', fx, { passive: true }); addEventListener('resize', fx); fx();
 })();
 </script>
 </body>
